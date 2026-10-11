@@ -1,0 +1,62 @@
+---
+import SectionHead from '../SectionHead.astro';
+import ServiceVisual from '../ServiceVisual.astro';
+import Icon from '../Icon.astro';
+import { services, pack } from '../../data/site';
+import { ui, t, href, type Lang } from '../../i18n';
+interface Props { lang: Lang; asPage?: boolean }
+const { lang, asPage = false } = Astro.props;
+const spans = [2, 1, 1, 1, 1];
+---
+<section class="section" id="services">
+  <div class="container">
+    {!asPage && <SectionHead tag={t(ui.sections.services.tag, lang)} title={t(ui.sections.services.title, lang)} sub={t(ui.sections.services.sub, lang)} />}
+    <div class="bento">
+      {services.map((s, i) => (
+        <a class="bento__card card" href={href(`/services/${s.slug}`, lang)} style={`--span:${spans[i]}`} data-reveal>
+          <div class="bento__visual"><ServiceVisual kind={s.visual} lang={lang} /></div>
+          <div class="bento__text">
+            <span class="chrome"><Icon name={s.icon} /></span>
+            <div>
+              <h3 class="h3">{t(s.title, lang)}</h3>
+              <p class="muted small">{t(s.short, lang)}</p>
+            </div>
+            <span class="bento__arrow"><Icon name="arrow-up-right" size={16} /></span>
+          </div>
+        </a>
+      ))}
+    </div>
+    <div class="pack card" data-reveal>
+      <div class="pack__text">
+        <span class="chip">{t(pack.name, lang)}</span>
+        <p>{t(pack.why, lang)}</p>
+      </div>
+      <ul class="pack__list">
+        {t(pack.included, lang).map((x) => <li><span class="ok"><Icon name="check" size={12} /></span>{x}</li>)}
+      </ul>
+      <a class="btn btn--primary pack__cta" href={href('/contact', lang)}>{t(ui.nav.cta, lang)} <span class="btn__icon"><Icon name="half" size={10} /></span></a>
+    </div>
+  </div>
+</section>
+<style>
+  .bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .bento__card { grid-column: span var(--span); display: grid; grid-template-rows: 1fr auto; min-height: 340px; transition: border-color .3s, transform .4s var(--ease); }
+  .bento__card:hover { border-color: rgba(196,176,255,.3); transform: translateY(-3px); }
+  .bento__visual { padding: 24px 24px 0; overflow: hidden; }
+  .bento__text { display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; padding: 20px 24px 24px; border-top: 1px solid var(--line); background: rgba(7,6,11,.35); position: relative; }
+  .bento__text .chrome { width: 40px; height: 40px; }
+  .bento__text p { margin-top: 2px; }
+  .bento__arrow { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--line-2); display: grid; place-items: center; color: var(--text-2); transition: background .3s, color .3s; }
+  .bento__card:hover .bento__arrow { background: #fff; color: #120e1c; }
+  .pack { margin-top: 16px; padding: 32px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px 40px; align-items: start; }
+  .pack__text { display: grid; gap: 14px; justify-items: start; color: var(--text-2); position: relative; }
+  .pack__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; position: relative; }
+  .pack__list li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; }
+  .ok { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: #fff; color: #120e1c; flex: none; }
+  .pack__cta { grid-column: 1 / -1; justify-self: start; position: relative; }
+  @media (max-width: 900px) {
+    .pack { grid-template-columns: 1fr; padding: 24px; }
+    .bento { grid-template-columns: 1fr; }
+    .bento__card { grid-column: auto; min-height: 300px; }
+  }
+</style>

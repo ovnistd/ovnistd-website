@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { faqs } from '../../data/site';
+import { langPaths, t, type Lang } from '../../i18n';
+export function getStaticPaths() { return langPaths(); }
+const { lang } = Astro.props as { lang: Lang };
+const fr = lang === 'fr';
+---
+<Base lang={lang} title="FAQ" description={fr ? 'Questions fréquentes sur nos services.' : 'Frequently asked questions about our services.'}>
+  <PageHero lang={lang} tag="FAQ" title={fr ? 'Vos questions,\nnos réponses' : 'Your questions\nanswered'} sub={fr ? 'Tout ce qu’il faut savoir avant de démarrer un projet avec nous.' : 'Everything you need to know before starting a project with us.'} crumbs={[{ label: 'FAQ', path: '/faq' }]} />
+  <section class="section" style="padding-top:0">
+    <div class="container faq">
+      {faqs.map((f, i) => (
+        <details class="q" open={i === 0}>
+          <summary>{t(f.q, lang)}<span class="plus"><Icon name="plus" size={14} /></span></summary>
+          <p class="muted">{t(f.a, lang)}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</Base>
+<style>
+  .faq { max-width: 820px; display: grid; gap: 10px; }
+  .q { border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(180deg, rgba(34,24,56,.5), rgba(14,11,22,.8)); transition: background .3s; }
+  .q[open] { background: linear-gradient(180deg, #ffffff, #ece6fb); color: #120e1c; }
+  .q[open] .muted { color: #4a4060; }
+  summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 20px; font-weight: 500; }
+  summary::-webkit-details-marker { display: none; }
+  .plus { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; border: 1px solid currentColor; opacity: .6; transition: transform .3s; flex: none; }
+  .q[open] .plus { transform: rotate(45deg); }
+  .q p { padding: 0 20px 20px; }
+</style>

@@ -1,0 +1,23 @@
+---
+import { logoPath, logoViewBox } from '../data/logo';
+interface Props { size?: number; solid?: boolean; word?: boolean }
+const { size = 34, solid = false, word = true } = Astro.props;
+---
+<span class="logo">
+  <svg class="logo__mark" viewBox={logoViewBox} width={size} height={Math.round(size * 0.6)} aria-hidden="true">
+    <defs>
+      <linearGradient id="ovni-chrome" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#ffffff" />
+        <stop offset=".35" stop-color="#e9e2fb" />
+        <stop offset=".6" stop-color="#9d84d8" />
+        <stop offset="1" stop-color="#f4f1fa" />
+      </linearGradient>
+    </defs>
+    <path fill={solid ? 'currentColor' : 'url(#ovni-chrome)'} fill-rule="evenodd" d={logoPath} />
+  </svg>
+  {word && <span class="logo__word">Ovnistudio</span>}
+</span>
+<style>
+  .logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.03em; font-size: 17px; color: inherit; }
+  .logo__mark { flex: none; filter: drop-shadow(0 2px 10px rgba(142, 108, 239, 0.55)); }
+</style>

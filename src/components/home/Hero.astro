@@ -1,0 +1,63 @@
+---
+import Icon from '../Icon.astro';
+import Chrome3D from '../Chrome3D.astro';
+import { ui, t, href, type Lang } from '../../i18n';
+import { studio } from '../../data/site';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const introLink = href('/', lang) + '#intro';
+---
+<section class="hero">
+  <div class="grid-bg"></div>
+  <div class="glow hero__glow"></div>
+  <div class="container hero__inner">
+    <div class="hero__text">
+      <a class="badge" href={href('/services/ai-vfx-content', lang)}>
+        <span class="badge__tag">{t(ui.hero.badgeTag, lang)}</span>
+        {t(ui.hero.badge, lang)}
+      </a>
+      <h1 class="display">{t(ui.hero.title1, lang)}<br />{t(ui.hero.title2, lang)}</h1>
+      <p class="lead">{t(ui.hero.sub, lang)}</p>
+      <div class="hero__btns">
+        <a class="btn btn--primary" href={href('/contact', lang)}>{t(ui.hero.cta1, lang)} <span class="btn__icon"><Icon name="half" size={10} /></span></a>
+        <a class="btn btn--ghost" href={introLink}>{t(ui.hero.cta2, lang)} <Icon name="play" size={12} /></a>
+      </div>
+      <ul class="facts">
+        <li><Icon name="check" size={16} /><span><small>{t(ui.hero.factDelivery, lang)}</small>{t(ui.hero.factDeliveryValue, lang)}</span></li>
+        <li><Icon name="calendar" size={16} /><span><small>{t(ui.hero.factSince, lang)}</small>{studio.since}</span></li>
+        <li><Icon name="globe" size={16} /><span><small>{t(ui.hero.factLangs, lang)}</small>{studio.languages.join(' · ')}</span></li>
+      </ul>
+    </div>
+    <div class="hero__3d"><Chrome3D /></div>
+  </div>
+</section>
+
+<style>
+  .hero { position: relative; padding: 168px 0 96px; overflow: hidden; }
+  .hero__glow { width: 900px; height: 700px; right: -200px; top: -200px; }
+  .hero__inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr 1fr; align-items: center; gap: 24px; }
+  .hero__text { display: grid; gap: 24px; justify-items: start; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 10px; padding: 4px 14px 4px 4px; border-radius: 999px; font-size: 13px; color: var(--text-2);
+    background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line-2); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    transition: border-color 0.2s;
+  }
+  .badge:hover { border-color: rgba(196, 176, 255, 0.35); color: var(--text); }
+  .badge__tag { background: linear-gradient(180deg, #fff, #e2d9f8); color: #120e1c; border-radius: 999px; padding: 2px 9px; font-size: 12px; font-weight: 500; }
+  .hero__btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px; }
+  .facts { list-style: none; margin: 20px 0 0; padding: 20px 0 0; display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid var(--line); }
+  .facts li { display: flex; align-items: center; gap: 10px; padding-right: 24px; margin-right: 24px; border-right: 1px solid var(--line); color: var(--purple-4); }
+  .facts li:last-child { border: 0; margin: 0; padding: 0; }
+  .facts span { display: grid; font-size: 14px; color: var(--text); line-height: 1.3; }
+  .facts small { font-size: 12px; color: var(--text-3); }
+  .hero__3d { height: 560px; margin: -60px -80px -60px 0; }
+  @media (max-width: 960px) {
+    .hero { padding-top: 132px; }
+    .hero__inner { grid-template-columns: 1fr; }
+    .hero__3d { order: -1; height: 340px; margin: -40px 0 -40px; }
+  }
+  @media (max-width: 560px) {
+    .facts { gap: 14px; }
+    .facts li { border: 0; padding: 0; margin: 0; width: 100%; }
+  }
+</style>

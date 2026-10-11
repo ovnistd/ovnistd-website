@@ -1,0 +1,61 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import { studio, services } from '../../data/site';
+import { langPaths, ui, t, type Lang } from '../../i18n';
+export function getStaticPaths() { return langPaths(); }
+const { lang } = Astro.props as { lang: Lang };
+const fr = lang === 'fr';
+const stages = fr ? ['Chez le fournisseur', 'En entrepôt', 'Déjà en main', 'Encore une idée'] : ['At the supplier', 'In a warehouse', 'Already in hand', 'Still an idea'];
+---
+<Base lang={lang} title={t(ui.nav.contact, lang)} description={t(ui.sections.cta.sub, lang)}>
+  <PageHero lang={lang} tag={t(ui.nav.contact, lang)} title={fr ? 'Réservez votre\nconsultation gratuite' : 'Book your\nfree consultation'} sub={t(ui.sections.cta.sub, lang)} crumbs={[{ label: t(ui.nav.contact, lang), path: '/contact' }]} />
+  <section class="section" style="padding-top:0">
+    <div class="container wrap">
+      <form class="card form" action={studio.formEndpoint} method="POST">
+        <div class="two">
+          <label>{fr ? 'Nom' : 'Name'}<input name="name" required autocomplete="name" /></label>
+          <label>Email<input name="email" type="email" required autocomplete="email" /></label>
+        </div>
+        <label>{fr ? 'Entreprise' : 'Company'}<input name="company" autocomplete="organization" /></label>
+        <fieldset><legend>{fr ? 'Ce dont vous avez besoin' : 'What you need'}</legend>
+          <div class="opts">{services.map((s) => <label class="opt"><input type="checkbox" name="services" value={s.slug} /><span>{t(s.title, lang)}</span></label>)}</div>
+        </fieldset>
+        <fieldset><legend>{fr ? 'Où en est votre produit ?' : 'Where is your product now?'}</legend>
+          <div class="opts">{stages.map((b) => <label class="opt"><input type="radio" name="product_stage" value={b} /><span>{b}</span></label>)}</div>
+        </fieldset>
+        <label>{fr ? 'Parlez-nous de votre produit' : 'Tell us about your product'}<textarea name="message" rows="5" required></textarea></label>
+        <button class="btn btn--primary" type="submit">{fr ? 'Envoyer' : 'Send message'} <span class="btn__icon"><Icon name="arrow-up-right" size={10} /></span></button>
+      </form>
+      <aside class="side">
+        <a class="card item" href={`mailto:${studio.email}`}><span class="chrome"><Icon name="mail" /></span><span><small>Email</small>{studio.email}</span></a>
+        <a class="card item" href={`tel:${studio.phone.replace(/\s/g, '')}`}><span class="chrome"><Icon name="phone" /></span><span><small>{fr ? 'Téléphone' : 'Phone'}</small>{studio.phone}</span></a>
+      </aside>
+    </div>
+  </section>
+</Base>
+<style>
+  .wrap { display: grid; grid-template-columns: 1.6fr 1fr; gap: 16px; align-items: start; }
+  .form { padding: 32px; display: grid; gap: 20px; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  label { display: grid; gap: 8px; font-size: 13px; color: var(--text-2); }
+  input:not([type=checkbox]):not([type=radio]), textarea {
+    font: inherit; font-size: 15px; color: var(--text); background: rgba(7,6,11,.6); border: 1px solid var(--line-2); border-radius: 10px; padding: 12px 14px; outline: none; transition: border-color .2s, box-shadow .2s;
+  }
+  input:focus, textarea:focus { border-color: var(--purple-3); box-shadow: 0 0 0 4px rgba(142,108,239,.15); }
+  fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 10px; }
+  legend { font-size: 13px; color: var(--text-2); margin-bottom: 10px; }
+  .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opt { display: block; }
+  .opt input { position: absolute; opacity: 0; }
+  .opt span { display: inline-block; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line-2); font-size: 14px; color: var(--text-2); cursor: pointer; transition: all .2s; }
+  .opt input:checked + span { background: #fff; color: #120e1c; border-color: #fff; }
+  .opt input:focus-visible + span { outline: 2px solid var(--purple-3); }
+  button { justify-self: start; border: 0; }
+  .side { display: grid; gap: 12px; }
+  .item { display: flex; gap: 16px; align-items: center; padding: 20px; }
+  .item span:last-child { display: grid; font-size: 15px; }
+  small { color: var(--text-3); font-size: 12px; }
+  @media (max-width: 860px) { .wrap, .two { grid-template-columns: 1fr; } }
+</style>

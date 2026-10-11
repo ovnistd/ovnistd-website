@@ -1,0 +1,69 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import PageHero from '../../../../components/PageHero.astro';
+import FilmPlayer from '../../../../components/FilmPlayer.astro';
+import WorkCard from '../../../../components/WorkCard.astro';
+import SectionHead from '../../../../components/SectionHead.astro';
+import CtaBand from '../../../../components/CtaBand.astro';
+import { cases, services, type Case } from '../../../../data/site';
+import { langPaths, ui, t, href, type Lang } from '../../../../i18n';
+export function getStaticPaths() {
+  return langPaths(cases.map((c) => ({ params: { brand: c.slug }, props: { c } })));
+}
+const { lang, c } = Astro.props as { lang: Lang; c: Case };
+const idx = cases.indexOf(c);
+const next = [cases[(idx + 1) % cases.length], cases[(idx + 2) % cases.length]];
+---
+<Base lang={lang} title={`${c.brand} · ${t(ui.nav.work, lang)}`} description={t(c.summary, lang)}>
+  <PageHero lang={lang} tag={t(c.sector, lang)} title={c.brand} sub={t(c.summary, lang)}
+    crumbs={[{ label: t(ui.nav.work, lang), path: '/work' }, { label: c.brand, path: `/work/${c.slug}` }]} />
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <a href={href(`/work/${c.slug}/film/${c.films[0].slug}`, lang)} data-reveal><FilmPlayer film={c.films[0]} brand={c.brand} hue={c.hue} large /></a>
+      <dl class="facts card" data-reveal>
+        <div><dt>{t(ui.common.client, lang)}</dt><dd>{c.brand}</dd></div>
+        <div><dt>{t(ui.common.sector, lang)}</dt><dd>{t(c.sector, lang)}</dd></div>
+        <div><dt>{t(ui.common.year, lang)}</dt><dd>{c.year}</dd></div>
+        <div><dt>{t(ui.common.services, lang)}</dt><dd>{c.services.map((s) => <a href={href(`/services/${s}`, lang)}>{t(services.find((x) => x.slug === s)!.title, lang)}</a>)}</dd></div>
+      </dl>
+      <div class="story">
+        <div data-reveal><h2 class="h3">{t(ui.common.challenge, lang)}</h2><p class="muted">{t(c.challenge, lang)}</p></div>
+        <div data-reveal><h2 class="h3">{t(ui.common.approach, lang)}</h2><p class="muted">{t(c.approach, lang)}</p></div>
+      </div>
+      <h2 class="h3" style="margin:64px 0 20px">{t(ui.common.results, lang)}</h2>
+      <div class="results">{c.results.map((r) => <div class="card res" data-reveal><strong>{r.value}</strong><span class="muted small">{t(r.label, lang)}</span></div>)}</div>
+      <h2 class="h3" style="margin:64px 0 20px">{t(ui.common.films, lang)}</h2>
+      <div class="films">
+        {c.films.map((f) => (
+          <a class="film" href={href(`/work/${c.slug}/film/${f.slug}`, lang)} data-reveal>
+            <FilmPlayer film={{ ...f, video: undefined }} brand={c.brand} hue={c.hue} />
+            <h3 class="h3">{t(f.title, lang)}</h3>
+            <p class="muted small">{t(f.description, lang)}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section class="section section--band">
+    <div class="container">
+      <SectionHead tag={t(ui.common.related, lang)} title={t(ui.sections.work.title, lang)} />
+      <div class="next">{next.map((n) => <WorkCard c={n} lang={lang} />)}</div>
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</Base>
+<style>
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); margin: 24px 0 0; padding: 24px 28px; gap: 16px; }
+  dt { font-size: 12px; color: var(--text-3); margin-bottom: 4px; }
+  dd { margin: 0; display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 15px; }
+  dd a:hover { color: var(--purple-4); }
+  .story { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 72px; }
+  .story > div { display: grid; gap: 12px; align-content: start; }
+  .results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .res { padding: 24px; display: grid; gap: 6px; }
+  .res strong { font-size: 44px; font-weight: 500; letter-spacing: -.04em; background: linear-gradient(180deg, #fff, #a993e0); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .films, .next { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .next { grid-template-columns: repeat(2, 1fr); position: relative; z-index: 1; }
+  .film { display: grid; gap: 10px; }
+  @media (max-width: 800px) { .facts { grid-template-columns: 1fr 1fr; } .story, .results, .films, .next { grid-template-columns: 1fr; } }
+</style>
