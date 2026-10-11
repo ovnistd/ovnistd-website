@@ -1,0 +1,80 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import PageHero from '../../../../components/PageHero.astro';
+import ServiceVisual from '../../../../components/ServiceVisual.astro';
+import WorkCard from '../../../../components/WorkCard.astro';
+import SectionHead from '../../../../components/SectionHead.astro';
+import Icon from '../../../../components/Icon.astro';
+import CtaBand from '../../../../components/CtaBand.astro';
+import { services, platforms, cases, type Service } from '../../../../data/site';
+import { langPaths, ui, t, href, type Lang } from '../../../../i18n';
+export function getStaticPaths() {
+  return langPaths(services.map((s) => ({ params: { service: s.slug }, props: { service: s } })));
+}
+const { lang, service } = Astro.props as { lang: Lang; service: Service };
+const related = cases.filter((c) => c.services.includes(service.slug)).slice(0, 3);
+const isWeb = service.slug === 'website-creation';
+---
+<Base lang={lang} title={t(service.title, lang)} description={t(service.short, lang)}>
+  <PageHero lang={lang} tag={t(ui.nav.services, lang)} title={t(service.title, lang)} sub={t(service.intro, lang)}
+    crumbs={[{ label: t(ui.nav.services, lang), path: '/services' }, { label: t(service.title, lang), path: `/services/${service.slug}` }]}>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px">
+      <a class="btn btn--primary" href={href('/contact', lang)}>{t(ui.hero.cta1, lang)} <span class="btn__icon"><Icon name="half" size={10} /></span></a>
+      <a class="btn btn--ghost" href={href('/work', lang)}>{t(ui.sections.work.all, lang)} <Icon name="play" size={12} /></a>
+    </div>
+  </PageHero>
+
+  <section class="section" style="padding-top:24px">
+    <div class="container svc">
+      <div class="card svc__visual" data-reveal><ServiceVisual kind={service.icon} /></div>
+      <div class="card svc__list" data-reveal>
+        <h2 class="h3">{t(ui.common.deliverables, lang)}</h2>
+        <ul>{t(service.deliverables, lang).map((d) => <li><span class="ok"><Icon name="check" size={12} /></span>{d}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  {isWeb && (
+    <section class="section section--band">
+      <div class="container">
+        <SectionHead tag={t(ui.common.platforms, lang)} title={lang === 'fr' ? 'Quatre façons\nde construire' : 'Four ways\nto build'} />
+        <div class="plats">
+          {platforms.map((p) => (
+            <a class="card plat" href={href(`/services/website-creation/${p.slug}`, lang)} data-reveal>
+              <span class="chrome"><Icon name="web" /></span>
+              <h3 class="h3">{p.name}</h3>
+              <p class="muted small">{t(p.tagline, lang)}</p>
+              <span class="plat__more small">{t(ui.common.learnMore, lang)} <Icon name="arrow" size={14} /></span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {related.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <SectionHead tag={t(ui.common.related, lang)} title={t(ui.sections.work.title, lang)} />
+        <div class="rel">{related.map((c) => <WorkCard c={c} lang={lang} />)}</div>
+      </div>
+    </section>
+  )}
+  <CtaBand lang={lang} />
+</Base>
+<style>
+  .svc { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16px; }
+  .svc__visual { min-height: 360px; display: grid; padding: 32px; }
+  .svc__list { padding: 32px; display: grid; gap: 16px; align-content: start; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { display: flex; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px dashed var(--line); color: var(--text-2); }
+  li:last-child { border: 0; }
+  .ok { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: #fff; color: #120e1c; flex: none; }
+  .plats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; position: relative; z-index: 1; }
+  .plat { padding: 24px; display: grid; gap: 12px; justify-items: start; transition: transform .4s var(--ease), border-color .3s; }
+  .plat:hover { transform: translateY(-3px); border-color: rgba(196,176,255,.3); }
+  .plat__more { display: inline-flex; gap: 6px; align-items: center; color: var(--purple-4); margin-top: 8px; }
+  .rel { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 900px) { .svc, .rel { grid-template-columns: 1fr; } .plats { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .plats { grid-template-columns: 1fr; } }
+</style>

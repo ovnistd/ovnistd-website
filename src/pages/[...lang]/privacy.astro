@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import { langPaths, type Lang } from '../../i18n';
+export function getStaticPaths() { return langPaths(); }
+const { lang } = Astro.props as { lang: Lang };
+const fr = lang === 'fr';
+const title = fr ? 'Politique de confidentialité' : 'Privacy policy';
+---
+<Base lang={lang} title={title} description={title}>
+  <PageHero lang={lang} tag={fr ? 'Légal' : 'Legal'} title={title} sub={fr ? 'Dernière mise à jour : [date]' : 'Last updated: [date]'} crumbs={[{ label: title, path: '/privacy' }]} />
+  <section class="section" style="padding-top:0">
+    <div class="container prose">
+      <p class="placeholder-note" style="justify-self:start">{fr ? 'Texte juridique à fournir par votre conseil' : 'Legal text to be provided by your advisor'}</p>
+      <p>{fr ? '[Collez ici le texte juridique complet.]' : '[Paste the full legal text here.]'}</p>
+    </div>
+  </section>
+</Base>

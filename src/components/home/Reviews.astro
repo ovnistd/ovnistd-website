@@ -1,0 +1,66 @@
+---
+import SectionHead from '../SectionHead.astro';
+import Icon from '../Icon.astro';
+import { reviews } from '../../data/site';
+import { ui, t, type Lang } from '../../i18n';
+interface Props { lang: Lang; head?: boolean }
+const { lang, head = true } = Astro.props;
+---
+<section class="section reviews" data-carousel>
+  <div class="container">
+    {head && <SectionHead tag={t(ui.sections.reviews.tag, lang)} title={t(ui.sections.reviews.title, lang)} sub={t(ui.sections.reviews.sub, lang)} />}
+    <div class="track" data-track>
+      {reviews.map((r) => (
+        <figure class="review card">
+          <div class="stars">{Array.from({ length: 5 }, () => <Icon name="star" size={14} />)}</div>
+          <blockquote>{t(r.quote, lang)}</blockquote>
+          <figcaption>
+            <span class="avatar">{r.name.replace(/[^A-Za-z]/g, '').slice(0, 1) || '?'}</span>
+            <span><strong>{r.name}</strong><small>{r.role}</small></span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+    <div class="controls">
+      <div class="dots" data-dots>{reviews.map((_, i) => <span class:list={{ on: i === 0 }}></span>)}</div>
+      <div class="arrows">
+        <button aria-label="Previous" data-prev><Icon name="chevron-left" size={16} /></button>
+        <button aria-label="Next" data-next><Icon name="chevron-right" size={16} /></button>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .track { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 32px) / 3); gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; }
+  .track::-webkit-scrollbar { display: none; }
+  .review { margin: 0; padding: 28px; display: grid; gap: 20px; align-content: space-between; scroll-snap-align: start; min-height: 240px; }
+  .stars { display: flex; gap: 2px; color: var(--purple-4); }
+  blockquote { margin: 0; font-size: 16px; color: var(--text); line-height: 1.6; }
+  figcaption { display: flex; gap: 12px; align-items: center; padding-top: 18px; border-top: 1px solid var(--line); }
+  figcaption span:last-child { display: grid; font-size: 14px; }
+  figcaption strong { font-weight: 500; }
+  figcaption small { color: var(--text-3); font-size: 13px; }
+  .avatar { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 14px; font-weight: 600; color: #120e1c; background: linear-gradient(145deg, #fff, #c9b8f5 40%, #6a4fb0); }
+  .controls { display: flex; justify-content: space-between; align-items: center; margin-top: 28px; }
+  .dots { display: flex; gap: 6px; }
+  .dots span { width: 6px; height: 6px; border-radius: 3px; background: var(--line-2); transition: width .3s, background .3s; }
+  .dots span.on { width: 22px; background: #fff; }
+  .arrows { display: flex; gap: 8px; }
+  .arrows button { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line-2); background: rgba(255,255,255,.03); display: grid; place-items: center; transition: background .2s, color .2s; }
+  .arrows button:hover { background: #fff; color: #120e1c; }
+  @media (max-width: 900px) { .track { grid-auto-columns: 75%; } }
+  @media (max-width: 560px) { .track { grid-auto-columns: 88%; } }
+</style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-track]')!;
+    const dots = [...root.querySelectorAll<HTMLElement>('[data-dots] span')];
+    const step = () => (track.firstElementChild as HTMLElement).offsetWidth + 16;
+    root.querySelector('[data-prev]')!.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    root.querySelector('[data-next]')!.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+    track.addEventListener('scroll', () => {
+      const i = Math.round(track.scrollLeft / step());
+      dots.forEach((d, j) => d.classList.toggle('on', j === Math.min(i, dots.length - 1)));
+    }, { passive: true });
+  });
+</script>

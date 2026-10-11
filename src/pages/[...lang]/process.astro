@@ -1,0 +1,14 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Process from '../../components/home/Process.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { langPaths, ui, t, type Lang } from '../../i18n';
+export function getStaticPaths() { return langPaths(); }
+const { lang } = Astro.props as { lang: Lang };
+---
+<Base lang={lang} title={t(ui.sections.process.tag, lang)} description={t(ui.sections.process.sub, lang)}>
+  <PageHero lang={lang} tag={t(ui.sections.process.tag, lang)} title={t(ui.sections.process.title, lang)} sub={t(ui.sections.process.sub, lang)} crumbs={[{ label: t(ui.sections.process.tag, lang), path: '/process' }]} />
+  <Process lang={lang} head={false} />
+  <CtaBand lang={lang} />
+</Base>

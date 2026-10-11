@@ -1,0 +1,42 @@
+---
+import Base from '../../../../../layouts/Base.astro';
+import PageHero from '../../../../../components/PageHero.astro';
+import FilmPlayer from '../../../../../components/FilmPlayer.astro';
+import Icon from '../../../../../components/Icon.astro';
+import CtaBand from '../../../../../components/CtaBand.astro';
+import { cases, type Case, type Film } from '../../../../../data/site';
+import { langPaths, ui, t, href, type Lang } from '../../../../../i18n';
+export function getStaticPaths() {
+  return langPaths(cases.flatMap((c) => c.films.map((f) => ({ params: { brand: c.slug, film: f.slug }, props: { c, f } }))));
+}
+const { lang, c, f } = Astro.props as { lang: Lang; c: Case; f: Film };
+const others = c.films.filter((x) => x.slug !== f.slug);
+---
+<Base lang={lang} title={`${t(f.title, lang)} · ${c.brand}`} description={t(f.description, lang)}>
+  <PageHero lang={lang} tag={`${c.brand} · ${t(ui.common.films, lang)}`} title={t(f.title, lang)} sub={t(f.description, lang)}
+    crumbs={[{ label: t(ui.nav.work, lang), path: '/work' }, { label: c.brand, path: `/work/${c.slug}` }, { label: t(f.title, lang), path: `/work/${c.slug}/film/${f.slug}` }]} />
+  <section class="section" style="padding-top:0">
+    <div class="container">
+      <div data-reveal><FilmPlayer film={f} brand={c.brand} hue={c.hue} large /></div>
+      <div class="row">
+        <a class="btn btn--ghost" href={href(`/work/${c.slug}`, lang)}><Icon name="chevron-left" size={14} /> {t(ui.common.viewCase, lang)}</a>
+        <span class="chip">{f.duration}</span>
+      </div>
+      {others.length > 0 && (
+        <>
+          <h2 class="h3" style="margin:64px 0 20px">{t(ui.common.otherFilms, lang)}</h2>
+          <div class="others">{others.map((o) => (
+            <a href={href(`/work/${c.slug}/film/${o.slug}`, lang)} class="o"><FilmPlayer film={{ ...o, video: undefined }} brand={c.brand} hue={c.hue} /><h3 class="h3">{t(o.title, lang)}</h3></a>
+          ))}</div>
+        </>
+      )}
+    </div>
+  </section>
+  <CtaBand lang={lang} />
+</Base>
+<style>
+  .row { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
+  .others { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .o { display: grid; gap: 10px; }
+  @media (max-width: 700px) { .others { grid-template-columns: 1fr; } }
+</style>
