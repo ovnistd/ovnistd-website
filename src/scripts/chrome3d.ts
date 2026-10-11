@@ -3,10 +3,10 @@ import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { mergeVertices } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 
-type Mode = 'stars' | 'svg' | 'glb' | 'single';
+type Mode = 'stars' | 'svg' | 'glb' | 'single' | 'model';
 
 /** A dark studio with bright strip lights, so chrome reads as chrome, tinted purple. */
-function studioEnvironment(renderer: THREE.WebGLRenderer) {
+export function studioEnvironment(renderer: THREE.WebGLRenderer) {
   const env = new THREE.Scene();
   env.add(new THREE.Mesh(
     new THREE.BoxGeometry(30, 30, 30),
@@ -33,6 +33,42 @@ function studioEnvironment(renderer: THREE.WebGLRenderer) {
   const tex = pmrem.fromScene(env, 0.035).texture;
   pmrem.dispose();
   return tex;
+}
+
+/**
+ * Loads a .gltf JSON whose buffers are embedded as base64. The buffers are decoded here instead of
+ * letting GLTFLoader fetch() the data: URIs, which strict hosts (CSP connect-src) block.
+ */
+export async function loadGltf(src: string) {
+  const res = await fetch(src);
+  if (!res.ok) throw new Error(`${src}: ${res.status}`);
+  const json = await res.json();
+  const chunks: Uint8Array[] = [];
+  let offset = 0;
+  const views = json.bufferViews ?? [];
+  const buffers = json.buffers ?? [];
+  const starts: number[] = [];
+  for (const buf of buffers) {
+    const b64 = String(buf.uri ?? '').split(',')[1] ?? '';
+    const bytes = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+    while (offset % 4) { chunks.push(new Uint8Array(1)); offset++; }
+    starts.push(offset); chunks.push(bytes); offset += bytes.length;
+  }
+  for (const v of views) { v.byteOffset = (v.byteOffset ?? 0) + starts[v.buffer ?? 0]; v.buffer = 0; }
+  while (offset % 4) { chunks.push(new Uint8Array(1)); offset++; }
+  json.buffers = [{ byteLength: offset }];
+  const enc = new TextEncoder().encode(JSON.stringify(json));
+  const jsonLen = Math.ceil(enc.length / 4) * 4;
+  const glb = new Uint8Array(12 + 8 + jsonLen + 8 + offset);
+  const dv = new DataView(glb.buffer);
+  dv.setUint32(0, 0x46546c67, true); dv.setUint32(4, 2, true); dv.setUint32(8, glb.length, true);
+  dv.setUint32(12, jsonLen, true); dv.setUint32(16, 0x4e4f534a, true);
+  glb.fill(0x20, 20, 20 + jsonLen); glb.set(enc, 20);
+  let o = 20 + jsonLen;
+  dv.setUint32(o, offset, true); dv.setUint32(o + 4, 0x004e4942, true); o += 8;
+  for (const c of chunks) { glb.set(c, o); o += c.length; }
+  const base = new URL(src, location.href).href.replace(/[^/]*$/, '');
+  return new GLTFLoader().parseAsync(glb.buffer, base);
 }
 
 function chromeMaterial() {
@@ -86,19 +122,32 @@ async function loadSvgLogo(src: string, material: THREE.Material) {
   for (const path of data.paths) {
     for (const shape of SVGLoader.createShapes(path)) {
       const geo = new THREE.ExtrudeGeometry(shape, {
-        depth: 18, bevelEnabled: true, bevelThickness: 6, bevelSize: 3, bevelSegments: 10, curveSegments: 32,
+        depth: 70, bevelEnabled: true, bevelThickness: 26, bevelSize: 7, bevelSegments: 12, curveSegments: 64,
       });
       group.add(new THREE.Mesh(geo, material));
     }
   }
   group.scale.y = -1; // SVG y axis points down
-  return fitToSize(group, 2.6);
+  return fitToSize(group, 3.4);
 }
 
+/** Loads a .glb/.gltf model. Glass parts become pearly lilac, everything else chrome, so the layers stay readable. */
 async function loadGlb(src: string, material: THREE.Material) {
-  const gltf = await new GLTFLoader().loadAsync(src);
-  gltf.scene.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).material = material; });
-  return fitToSize(gltf.scene, 2.6);
+  const gltf = /\.json$/.test(src) ? await loadGltf(src) : await new GLTFLoader().loadAsync(src);
+  const pearl = new THREE.MeshPhysicalMaterial({
+    color: 0xe4d9ff, metalness: 0.55, roughness: 0.12, clearcoat: 1, clearcoatRoughness: 0.05,
+    iridescence: 0.8, iridescenceIOR: 1.6, envMapIntensity: 1.6, side: THREE.DoubleSide,
+  });
+  const deep = new THREE.MeshPhysicalMaterial({
+    color: 0x7b62c4, metalness: 1, roughness: 0.2, clearcoat: 1, clearcoatRoughness: 0.08, envMapIntensity: 1.4, side: THREE.DoubleSide,
+  });
+  gltf.scene.traverse((o) => {
+    const mesh = o as THREE.Mesh;
+    if (!mesh.isMesh) return;
+    const name = ((mesh.material as THREE.Material)?.name || '').toLowerCase();
+    mesh.material = name.includes('green') ? pearl : name.includes('dark') ? material : deep;
+  });
+  return fitToSize(gltf.scene, 3.2);
 }
 
 export async function mountChrome(canvas: HTMLCanvasElement, mode: Mode, src = '') {
@@ -146,7 +195,9 @@ export async function mountChrome(canvas: HTMLCanvasElement, mode: Mode, src = '
   } else {
     try {
       const logo = mode === 'svg' ? await loadSvgLogo(src, material) : await loadGlb(src, material);
-      add(logo, 0, 0, 0, 1, 0.35);
+      if (mode === 'model') logo.scale.multiplyScalar(1.25);
+      add(logo, 0, 0, 0, 1, 0);
+      logo.rotation.x = -0.12;
     } catch (err) {
       console.warn('[ovnistudio] could not load 3D logo, falling back to stars', err);
       add(new THREE.Mesh(starGeometry(), material), 0, 0, 0, 1.6, 0.3);
@@ -183,8 +234,9 @@ export async function mountChrome(canvas: HTMLCanvasElement, mode: Mode, src = '
     root.rotation.x = pointer.y * 0.2;
     for (const f of floaters) {
       f.obj.position.y = f.base.y + Math.sin(t * 0.9 + f.phase) * f.amp;
-      f.obj.rotation.y = Math.sin(t * 0.5 + f.phase) * 0.6 + t * f.spin * 0.25;
-      f.obj.rotation.x = Math.cos(t * 0.4 + f.phase) * 0.15;
+      // a logo sways gently so it stays readable; the stars also spin
+      f.obj.rotation.y = Math.sin(t * 0.5 + f.phase) * (f.spin ? 0.6 : 0.35) + t * f.spin * 0.25;
+      f.obj.rotation.x = (f.spin ? 0 : -0.12) + Math.cos(t * 0.4 + f.phase) * 0.12;
     }
     renderer.render(scene, camera);
   };

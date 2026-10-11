@@ -14,7 +14,7 @@ const other = altPath(Astro.url.pathname, lang);
 ---
 <header class="nav" data-nav>
   <div class="container nav__inner">
-    <a href={href('/', lang)} aria-label="Ovnistudio home"><Logo /></a>
+    <a href={href('/', lang)} aria-label="Ovnistudio home"><Logo size={46} word={false} /></a>
     <nav class="nav__links" aria-label="Main">
       {links.map((l) => <a href={href(l.path, lang)}>{t(l.label, lang)}</a>)}
     </nav>

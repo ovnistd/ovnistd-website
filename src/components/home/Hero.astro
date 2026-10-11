@@ -5,14 +5,14 @@ import { ui, t, href, type Lang } from '../../i18n';
 import { studio } from '../../data/site';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
-const showreel = studio.showreel || href('/work', lang);
+const introLink = href('/', lang) + '#intro';
 ---
 <section class="hero">
   <div class="grid-bg"></div>
   <div class="glow hero__glow"></div>
   <div class="container hero__inner">
     <div class="hero__text">
-      <a class="badge" href={href('/services/ai-content', lang)}>
+      <a class="badge" href={href('/services/ai-vfx-content', lang)}>
         <span class="badge__tag">{t(ui.hero.badgeTag, lang)}</span>
         {t(ui.hero.badge, lang)}
       </a>
@@ -20,10 +20,10 @@ const showreel = studio.showreel || href('/work', lang);
       <p class="lead">{t(ui.hero.sub, lang)}</p>
       <div class="hero__btns">
         <a class="btn btn--primary" href={href('/contact', lang)}>{t(ui.hero.cta1, lang)} <span class="btn__icon"><Icon name="half" size={10} /></span></a>
-        <a class="btn btn--ghost" href={showreel}>{t(ui.hero.cta2, lang)} <Icon name="play" size={12} /></a>
+        <a class="btn btn--ghost" href={introLink}>{t(ui.hero.cta2, lang)} <Icon name="play" size={12} /></a>
       </div>
       <ul class="facts">
-        <li><Icon name="pin" size={16} /><span><small>{t(ui.hero.factPlace, lang)}</small>{studio.city}, {studio.country}</span></li>
+        <li><Icon name="check" size={16} /><span><small>{t(ui.hero.factDelivery, lang)}</small>{t(ui.hero.factDeliveryValue, lang)}</span></li>
         <li><Icon name="calendar" size={16} /><span><small>{t(ui.hero.factSince, lang)}</small>{studio.since}</span></li>
         <li><Icon name="globe" size={16} /><span><small>{t(ui.hero.factLangs, lang)}</small>{studio.languages.join(' · ')}</span></li>
       </ul>

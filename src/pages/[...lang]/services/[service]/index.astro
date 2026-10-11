@@ -6,14 +6,13 @@ import WorkCard from '../../../../components/WorkCard.astro';
 import SectionHead from '../../../../components/SectionHead.astro';
 import Icon from '../../../../components/Icon.astro';
 import CtaBand from '../../../../components/CtaBand.astro';
-import { services, platforms, cases, type Service } from '../../../../data/site';
+import { services, cases, type Service } from '../../../../data/site';
 import { langPaths, ui, t, href, type Lang } from '../../../../i18n';
 export function getStaticPaths() {
   return langPaths(services.map((s) => ({ params: { service: s.slug }, props: { service: s } })));
 }
 const { lang, service } = Astro.props as { lang: Lang; service: Service };
 const related = cases.filter((c) => c.services.includes(service.slug)).slice(0, 3);
-const isWeb = service.slug === 'website-creation';
 ---
 <Base lang={lang} title={t(service.title, lang)} description={t(service.short, lang)}>
   <PageHero lang={lang} tag={t(ui.nav.services, lang)} title={t(service.title, lang)} sub={t(service.intro, lang)}
@@ -26,7 +25,7 @@ const isWeb = service.slug === 'website-creation';
 
   <section class="section" style="padding-top:24px">
     <div class="container svc">
-      <div class="card svc__visual" data-reveal><ServiceVisual kind={service.icon} /></div>
+      <div class="card svc__visual" data-reveal><ServiceVisual kind={service.visual} lang={lang} /></div>
       <div class="card svc__list" data-reveal>
         <h2 class="h3">{t(ui.common.deliverables, lang)}</h2>
         <ul>{t(service.deliverables, lang).map((d) => <li><span class="ok"><Icon name="check" size={12} /></span>{d}</li>)}</ul>
@@ -34,23 +33,6 @@ const isWeb = service.slug === 'website-creation';
     </div>
   </section>
 
-  {isWeb && (
-    <section class="section section--band">
-      <div class="container">
-        <SectionHead tag={t(ui.common.platforms, lang)} title={lang === 'fr' ? 'Quatre façons\nde construire' : 'Four ways\nto build'} />
-        <div class="plats">
-          {platforms.map((p) => (
-            <a class="card plat" href={href(`/services/website-creation/${p.slug}`, lang)} data-reveal>
-              <span class="chrome"><Icon name="web" /></span>
-              <h3 class="h3">{p.name}</h3>
-              <p class="muted small">{t(p.tagline, lang)}</p>
-              <span class="plat__more small">{t(ui.common.learnMore, lang)} <Icon name="arrow" size={14} /></span>
-            </a>
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
 
   {related.length > 0 && (
     <section class="section">

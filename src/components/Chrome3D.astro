@@ -1,11 +1,13 @@
 ---
 import { hero3d } from '../data/hero3d';
-interface Props { variant?: 'hero' | 'single'; class?: string }
+interface Props { variant?: 'hero' | 'single' | 'model'; class?: string }
 const { variant = 'hero', class: cls } = Astro.props;
-const mode = variant === 'single' ? 'single' : hero3d.mode;
+const mode = variant === 'hero' ? hero3d.mode : variant;
+// The Blender model is shipped as embedded glTF JSON so any static host serves it.
+const src = variant === 'model' ? '/3d/ovni-model.json' : hero3d.src;
 ---
 <div class:list={['chrome3d', `chrome3d--${variant}`, cls]}>
-  <canvas data-chrome3d data-mode={mode} data-src={mode === "svg" || mode === "glb" ? hero3d.src : undefined} aria-hidden="true"></canvas>
+  <canvas data-chrome3d data-mode={mode} data-src={mode === "svg" || mode === "glb" || mode === "model" ? src : undefined} aria-hidden="true"></canvas>
 </div>
 
 <style>

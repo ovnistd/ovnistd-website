@@ -7,16 +7,16 @@ import type { L } from '../i18n';
 
 export const studio = {
   name: 'Ovnistudio',
-  city: '[City]', // PLACEHOLDER
-  country: '[Country]', // PLACEHOLDER
-  since: '[Year]', // PLACEHOLDER
-  languages: ['EN', 'FR', '[+1]'], // PLACEHOLDER
-  email: 'hello@ovnistudio.com', // PLACEHOLDER
-  phone: '+00 0 00 00 00 00', // PLACEHOLDER
-  address: '[Street], [City], [Country]', // PLACEHOLDER
+  trustpilot: 'https://www.trustpilot.com/review/ovnistudio.net',
+  since: '2022',
+  languages: ['EN', 'FR', 'AR'],
+  email: 'hello@ovnistudio.net',
+  phone: '+213 797 29 52 54',
   // PLACEHOLDER: create a free form at formspree.io (or similar) and paste its endpoint here.
   formEndpoint: 'https://formspree.io/f/your-form-id',
-  showreel: '', // PLACEHOLDER: URL of the showreel video (mp4 or YouTube/Vimeo link)
+  // PLACEHOLDER: paste the YouTube or Vimeo link of the founder video here,
+  // e.g. 'https://www.youtube.com/watch?v=XXXX' or 'https://vimeo.com/123456'
+  introVideo: '',
   founder: {
     slug: 'founder-name', // PLACEHOLDER: becomes /about/<slug>
     name: '[Founder name]', // PLACEHOLDER
@@ -27,225 +27,180 @@ export const studio = {
     },
   },
   socials: [
-    { name: 'Instagram', url: 'https://instagram.com/' }, // PLACEHOLDER URLs
-    { name: 'Behance', url: 'https://behance.net/' },
-    { name: 'LinkedIn', url: 'https://linkedin.com/' },
-    { name: 'YouTube', url: 'https://youtube.com/' },
+    { name: 'Instagram', url: 'https://www.instagram.com/ovnistd' },
+    { name: 'Trustpilot', url: 'https://www.trustpilot.com/review/ovnistudio.net' },
   ],
 };
 
-// PLACEHOLDER numbers
 export const stats: Array<{ value: string; label: L }> = [
-  { value: '120+', label: { en: 'Projects shipped', fr: 'Projets livrés' } },
-  { value: '40+', label: { en: 'Brands launched', fr: 'Marques lancées' } },
-  { value: '4.9/5', label: { en: 'Average client rating', fr: 'Note client moyenne' } },
-  { value: '12', label: { en: 'Countries served', fr: 'Pays servis' } },
+  { value: '2 wks', label: { en: 'Maximum delivery time, store and 3D included', fr: 'Délai maximum, boutique et 3D compris' } },
+  { value: '100%', label: { en: 'Yours to keep: files, source code and assets, free', fr: 'À vous : fichiers, code source et assets, gratuitement' } },
+  { value: '3', label: { en: 'Clients at a time, never more', fr: 'Clients à la fois, jamais plus' } },
+  { value: '24h', label: { en: 'Average reply to new inquiries', fr: 'Délai moyen de réponse aux demandes' } },
 ];
 
 // PLACEHOLDER client names: swap for real logos (SVG files in /public/clients/).
 export const clients = ['Northwind', 'Lumen', 'Halcyon', 'Atlas & Co', 'Vertex', 'Kairo', 'Monolith', 'Solace'];
 
 export type ServiceSlug =
-  | 'website-creation'
-  | 'brand-identity'
-  | 'graphic-design'
-  | 'creative-media'
-  | '3d-modeling'
-  | 'ai-content';
+  | 'shopify-store'
+  | '3d-product-modeling'
+  | 'ai-vfx-content'
+  | '3d-animation'
+  | 'trend-content';
 
 export interface Service {
   slug: ServiceSlug;
   icon: string;
+  visual: string;
   title: L;
   short: L;
   intro: L;
   deliverables: L<string[]>;
 }
 
+/** The 3D Launch Pack: everything below is delivered together, in 2 weeks max. */
+export const pack = {
+  name: { en: '3D Launch Pack', fr: 'Pack Lancement 3D' },
+  pitch: {
+    en: 'A Shopify store built to convert, with your product in photoreal 3D. No samples, no photoshoot, no waiting for production.',
+    fr: 'Une boutique Shopify pensée pour convertir, avec votre produit en 3D photoréaliste. Sans échantillon, sans shooting, sans attendre la production.',
+  },
+  why: {
+    en: 'More and more brands launch with products made in China that sit in a warehouse and never reach the founder’s hands. We make that product real: photoreal 3D from your supplier photos, images from every angle, and AI + VFX content of people holding it, so customers trust what they buy.',
+    fr: 'De plus en plus de marques se lancent avec des produits fabriqués en Chine, stockés en entrepôt, que le fondateur n’a jamais eus en main. On rend ce produit réel : 3D photoréaliste à partir des photos du fournisseur, des images sous tous les angles, et des contenus IA + VFX de personnes qui le tiennent, pour que vos clients aient confiance.',
+  },
+  included: {
+    en: [
+      'Delivered in 2 weeks max, exactly as you need it',
+      'Follow-up after launch: changes any time, just message us',
+      'Every file you need, 100% free: 3D models, renders, videos, source code',
+    ],
+    fr: [
+      'Livré en 2 semaines maximum, exactement comme vous le voulez',
+      'Suivi après le lancement : des modifications à tout moment, il suffit de nous écrire',
+      'Tous les fichiers dont vous avez besoin, 100 % gratuits : modèles 3D, rendus, vidéos, code source',
+    ],
+  },
+};
+
 export const services: Service[] = [
   {
-    slug: 'website-creation',
+    slug: 'shopify-store',
     icon: 'web',
-    title: { en: 'Website creation', fr: 'Création de sites web' },
+    visual: 'web',
+    title: { en: 'Shopify store that converts', fr: 'Boutique Shopify qui convertit' },
     short: {
-      en: 'Fast, beautiful sites on Shopify, WooCommerce, WordPress or fully custom code.',
-      fr: 'Des sites rapides et beaux, sur Shopify, WooCommerce, WordPress ou en code sur mesure.',
+      en: 'A fast, custom Shopify store with 3D on every product page, built to turn visitors into buyers.',
+      fr: 'Une boutique Shopify rapide et sur mesure, avec la 3D sur chaque fiche produit, pensée pour transformer les visiteurs en acheteurs.',
     },
     intro: {
-      en: 'We design and build websites that load fast, rank well and turn visitors into customers. You get a site your team can update on its own, on the platform that fits your business.',
-      fr: 'On conçoit et développe des sites qui chargent vite, se positionnent bien et transforment les visiteurs en clients. Vous obtenez un site que votre équipe peut mettre à jour seule, sur la plateforme adaptée à votre activité.',
+      en: 'Your store is where the sale happens. We design and build a Shopify store around your product: clear offer, trust signals, fast pages and a checkout that works on every phone. Your 3D product sits on every page so customers see exactly what they get.',
+      fr: 'C’est sur votre boutique que la vente se fait. On conçoit et développe une boutique Shopify autour de votre produit : une offre claire, des éléments de confiance, des pages rapides et un paiement qui marche sur tous les téléphones. Votre produit en 3D est présent sur chaque page pour que le client voie exactement ce qu’il achète.',
     },
     deliverables: {
-      en: ['UX and UI design', 'Responsive development', 'SEO foundations', 'CMS training', 'Analytics setup', 'Launch support'],
-      fr: ['Design UX et UI', 'Développement responsive', 'Bases SEO', 'Formation au CMS', 'Mise en place des analytics', 'Accompagnement au lancement'],
+      en: ['Custom Shopify theme', 'Conversion-focused product pages', '3D product images on every page', 'Mobile-first checkout', 'Apps, payments and shipping set up', 'Training to run it yourself'],
+      fr: ['Thème Shopify sur mesure', 'Fiches produit orientées conversion', 'Images produit 3D sur chaque page', 'Paiement pensé pour le mobile', 'Applications, paiements et livraison configurés', 'Formation pour gérer la boutique seul'],
     },
   },
   {
-    slug: 'brand-identity',
-    icon: 'brand',
-    title: { en: 'Brand identity', fr: 'Identité de marque' },
-    short: {
-      en: 'Logos, color, type and voice that make your brand instantly recognisable.',
-      fr: 'Logo, couleurs, typographie et ton qui rendent votre marque reconnaissable au premier coup d’œil.',
-    },
-    intro: {
-      en: 'A brand is more than a logo. We define your positioning, then craft the visual system and voice that carry it everywhere, delivered as a brand book your team can actually use.',
-      fr: 'Une marque, c’est plus qu’un logo. On définit votre positionnement, puis on crée le système visuel et le ton qui le portent partout, livrés dans une charte que votre équipe peut vraiment utiliser.',
-    },
-    deliverables: {
-      en: ['Brand strategy', 'Logo and marks', 'Color and typography', 'Tone of voice', 'Brand guidelines', 'Launch assets'],
-      fr: ['Stratégie de marque', 'Logo et déclinaisons', 'Couleurs et typographie', 'Ton de voix', 'Charte graphique', 'Kit de lancement'],
-    },
-  },
-  {
-    slug: 'graphic-design',
-    icon: 'design',
-    title: { en: 'Graphic design', fr: 'Design graphique' },
-    short: {
-      en: 'Packaging, print, social and campaign visuals that stay on brand.',
-      fr: 'Packaging, print, réseaux sociaux et visuels de campagne fidèles à votre marque.',
-    },
-    intro: {
-      en: 'From packaging to pitch decks, we design everything your brand puts into the world, with the same care as the identity itself.',
-      fr: 'Du packaging au pitch deck, on conçoit tout ce que votre marque montre au monde, avec le même soin que l’identité elle-même.',
-    },
-    deliverables: {
-      en: ['Packaging', 'Print and editorial', 'Social media kits', 'Ad campaigns', 'Pitch decks', 'Signage'],
-      fr: ['Packaging', 'Print et édition', 'Kits réseaux sociaux', 'Campagnes publicitaires', 'Pitch decks', 'Signalétique'],
-    },
-  },
-  {
-    slug: 'creative-media',
-    icon: 'media',
-    title: { en: 'Creative media', fr: 'Médias créatifs' },
-    short: {
-      en: 'Brand films, product videos, motion design and photography.',
-      fr: 'Films de marque, vidéos produit, motion design et photographie.',
-    },
-    intro: {
-      en: 'Stories move people. We write, shoot, animate and edit films and visuals made for the screens your audience lives on.',
-      fr: 'Les histoires font bouger les gens. On écrit, tourne, anime et monte des films et visuels pensés pour les écrans de votre audience.',
-    },
-    deliverables: {
-      en: ['Brand films', 'Product videos', 'Motion design', 'Photography', 'Social cutdowns', 'Sound design'],
-      fr: ['Films de marque', 'Vidéos produit', 'Motion design', 'Photographie', 'Formats courts réseaux', 'Sound design'],
-    },
-  },
-  {
-    slug: '3d-modeling',
+    slug: '3d-product-modeling',
     icon: 'cube',
-    title: { en: '3D modeling', fr: 'Modélisation 3D' },
+    visual: 'cube',
+    title: { en: 'Photoreal 3D product', fr: 'Produit en 3D photoréaliste' },
     short: {
-      en: 'Product renders, 3D animations and interactive objects for web and ads.',
-      fr: 'Rendus produit, animations 3D et objets interactifs pour le web et la pub.',
+      en: 'Your product modeled in 3D from supplier photos, with images from every angle. No sample needed.',
+      fr: 'Votre produit modélisé en 3D à partir des photos du fournisseur, avec des images sous tous les angles. Pas besoin d’échantillon.',
     },
     intro: {
-      en: 'Show products before they exist and make your brand tangible. We model, texture, light and animate in 3D, for stills, films and real-time web.',
-      fr: 'Montrez vos produits avant qu’ils existent et rendez votre marque tangible. On modélise, texture, éclaire et anime en 3D, pour l’image fixe, le film et le web temps réel.',
+      en: 'Send us your supplier photos, dimensions and references. We model, texture and light your product until it is indistinguishable from a studio photo, so you can sell it before it even arrives.',
+      fr: 'Envoyez-nous les photos du fournisseur, les dimensions et vos références. On modélise, texture et éclaire votre produit jusqu’à ce qu’il soit impossible à distinguer d’une photo studio, pour le vendre avant même qu’il arrive.',
     },
     deliverables: {
-      en: ['Product modeling', 'Photoreal renders', '3D animation', 'Web-ready 3D (glTF)', 'AR previews', 'Logo in 3D'],
-      fr: ['Modélisation produit', 'Rendus photoréalistes', 'Animation 3D', '3D pour le web (glTF)', 'Aperçus AR', 'Logo en 3D'],
+      en: ['Accurate 3D model', 'Realistic materials and labels', 'Studio-quality images from every angle', 'Detail close-ups', 'Color and variant versions', 'Web-ready 3D file (glTF)', 'Source files included'],
+      fr: ['Modèle 3D fidèle', 'Matières et étiquettes réalistes', 'Images qualité studio sous tous les angles', 'Gros plans détaillés', 'Versions couleurs et variantes', 'Fichier 3D pour le web (glTF)', 'Fichiers sources inclus'],
     },
   },
   {
-    slug: 'ai-content',
+    slug: 'ai-vfx-content',
     icon: 'ai',
-    title: { en: 'AI content', fr: 'Contenu IA' },
+    visual: 'ai',
+    title: { en: 'AI + VFX realistic content', fr: 'Contenu réaliste IA + VFX' },
     short: {
-      en: 'AI-assisted visuals, video and copy, art-directed by humans.',
-      fr: 'Visuels, vidéos et textes assistés par IA, avec une direction artistique humaine.',
+      en: 'People holding and using your product, created with AI and VFX for more trust.',
+      fr: 'Des personnes qui tiennent et utilisent votre produit, créées avec l’IA et les VFX pour plus de confiance.',
     },
     intro: {
-      en: 'We use AI where it helps: more variations, faster production, lower cost. Every output is art-directed and checked by our team so it still feels like you.',
-      fr: 'On utilise l’IA là où elle aide : plus de variantes, une production plus rapide, un coût réduit. Chaque contenu est dirigé et vérifié par notre équipe pour qu’il vous ressemble.',
+      en: 'Customers trust products they see in real hands. We combine your 3D product with AI and VFX to create realistic photos and videos of people holding, opening and using it, without a shoot or a single physical sample.',
+      fr: 'Les clients font confiance aux produits qu’ils voient dans de vraies mains. On combine votre produit 3D avec l’IA et les VFX pour créer des photos et vidéos réalistes de personnes qui le tiennent, l’ouvrent et l’utilisent, sans shooting ni échantillon.',
     },
     deliverables: {
-      en: ['AI image campaigns', 'AI video and avatars', 'Content at scale', 'Custom brand models', 'Prompt libraries', 'Workflow setup'],
-      fr: ['Campagnes visuelles IA', 'Vidéo et avatars IA', 'Contenu à grande échelle', 'Modèles de marque sur mesure', 'Bibliothèques de prompts', 'Mise en place des workflows'],
-    },
-  },
-];
-
-export const platforms: Array<{ slug: string; name: string; tagline: L; body: L; bestFor: L<string[]> }> = [
-  {
-    slug: 'shopify',
-    name: 'Shopify',
-    tagline: { en: 'E-commerce that scales with you', fr: 'Un e-commerce qui grandit avec vous' },
-    body: {
-      en: 'Custom Shopify themes, product pages that convert and apps wired in properly. Ideal when selling online is the heart of your business.',
-      fr: 'Thèmes Shopify sur mesure, fiches produit qui convertissent et applications bien intégrées. Idéal quand la vente en ligne est au cœur de votre activité.',
-    },
-    bestFor: {
-      en: ['D2C brands', 'Growing catalogs', 'International selling'],
-      fr: ['Marques D2C', 'Catalogues en croissance', 'Vente à l’international'],
+      en: ['Hands-on product photos', 'UGC-style videos', 'Lifestyle scenes', 'Model and avatar content', 'Ad-ready formats', 'Art-directed by our team'],
+      fr: ['Photos produit en main', 'Vidéos style UGC', 'Scènes lifestyle', 'Contenus avec mannequins et avatars', 'Formats prêts pour la pub', 'Direction artistique par notre équipe'],
     },
   },
   {
-    slug: 'woocommerce',
-    name: 'WooCommerce',
-    tagline: { en: 'Flexible shops on WordPress', fr: 'Des boutiques flexibles sur WordPress' },
-    body: {
-      en: 'A full online store on top of WordPress, with no monthly platform fees and complete control over your content and data.',
-      fr: 'Une boutique complète sur WordPress, sans frais de plateforme mensuels et avec un contrôle total sur votre contenu et vos données.',
+    slug: '3d-animation',
+    icon: 'media',
+    visual: 'media',
+    title: { en: '3D animation & product reveals', fr: 'Animation 3D & révélations produit' },
+    short: {
+      en: 'Cinematic product reveals and VFX animations that stop the scroll.',
+      fr: 'Des révélations produit cinématographiques et des animations VFX qui arrêtent le scroll.',
     },
-    bestFor: {
-      en: ['Content-led shops', 'Custom checkout flows', 'Existing WordPress sites'],
-      fr: ['Boutiques orientées contenu', 'Tunnels de commande sur mesure', 'Sites WordPress existants'],
+    intro: {
+      en: 'A launch deserves a moment. We animate your product in 3D: reveals, exploded views, ingredient and feature shots, and VFX scenes impossible to film, cut for your store, ads and social media.',
+      fr: 'Un lancement mérite un moment fort. On anime votre produit en 3D : révélations, vues éclatées, plans ingrédients et fonctionnalités, scènes VFX impossibles à filmer, déclinés pour votre boutique, vos pubs et vos réseaux.',
     },
-  },
-  {
-    slug: 'wordpress',
-    name: 'WordPress',
-    tagline: { en: 'Sites your team can run', fr: 'Des sites que votre équipe maîtrise' },
-    body: {
-      en: 'Custom-designed WordPress sites with a clean editor, so your team can publish pages and articles without calling a developer.',
-      fr: 'Des sites WordPress au design sur mesure avec un éditeur clair, pour que votre équipe publie pages et articles sans appeler un développeur.',
-    },
-    bestFor: {
-      en: ['Corporate sites', 'Blogs and media', 'Multilingual sites'],
-      fr: ['Sites corporate', 'Blogs et médias', 'Sites multilingues'],
+    deliverables: {
+      en: ['Product reveal film', 'VFX animations', 'Feature and detail shots', 'Hero video for the store', 'Vertical cuts for social', 'Sound design'],
+      fr: ['Film de révélation produit', 'Animations VFX', 'Plans fonctionnalités et détails', 'Vidéo principale pour la boutique', 'Formats verticaux pour les réseaux', 'Sound design'],
     },
   },
   {
-    slug: 'custom-code',
-    name: 'Custom code',
-    tagline: { en: 'No limits, no templates', fr: 'Sans limites, sans template' },
-    body: {
-      en: 'Hand-coded sites and web apps with modern frameworks, 3D and motion. For when performance and originality matter most.',
-      fr: 'Sites et applications web codés à la main avec des frameworks modernes, de la 3D et du motion. Quand la performance et l’originalité comptent avant tout.',
+    slug: 'trend-content',
+    icon: 'design',
+    visual: 'design',
+    title: { en: 'Trend-driven content', fr: 'Contenu qui suit les tendances' },
+    short: {
+      en: 'Content built on what is working right now, to engage more customers.',
+      fr: 'Des contenus construits sur ce qui marche en ce moment, pour engager plus de clients.',
     },
-    bestFor: {
-      en: ['Immersive brand sites', 'Web apps', 'Headless commerce'],
-      fr: ['Sites de marque immersifs', 'Applications web', 'E-commerce headless'],
+    intro: {
+      en: 'We follow the formats and marketing strategies that are performing right now and turn them into content for your brand, so your launch shows up where your customers already are.',
+      fr: 'On suit les formats et les stratégies marketing qui fonctionnent en ce moment et on les transforme en contenus pour votre marque, pour que votre lancement apparaisse là où sont déjà vos clients.',
+    },
+    deliverables: {
+      en: ['Trend research', 'Short-form video concepts', 'Hooks and scripts', 'Ad creatives', 'Launch content calendar', 'Ready-to-post files'],
+      fr: ['Veille des tendances', 'Concepts de vidéos courtes', 'Accroches et scripts', 'Créas publicitaires', 'Calendrier de contenus de lancement', 'Fichiers prêts à publier'],
     },
   },
 ];
 
 export const comparison: Array<{ typical: L; studio: L }> = [
   {
-    typical: { en: 'Account managers between you and the makers', fr: 'Des chefs de projet entre vous et ceux qui font' },
-    studio: { en: 'You talk directly to the people doing the work', fr: 'Vous parlez directement à ceux qui réalisent' },
+    typical: { en: 'Wait for samples and production before you can sell', fr: 'Attendre échantillons et production avant de vendre' },
+    studio: { en: 'Photoreal 3D from supplier photos, sell before it arrives', fr: '3D photoréaliste depuis les photos fournisseur, vendez avant réception' },
   },
   {
-    typical: { en: 'Web, brand and video split across vendors', fr: 'Web, marque et vidéo éclatés entre prestataires' },
-    studio: { en: 'Six crafts under one roof, one consistent brand', fr: 'Six métiers sous un toit, une marque cohérente' },
+    typical: { en: 'Pay a photographer, studio and models', fr: 'Payer photographe, studio et mannequins' },
+    studio: { en: 'AI + VFX content of people holding your product', fr: 'Contenus IA + VFX de personnes avec votre produit en main' },
   },
   {
-    typical: { en: 'Templates dressed up as custom work', fr: 'Des templates déguisés en sur-mesure' },
-    studio: { en: 'Designed from a blank page for your brand', fr: 'Conçu à partir d’une page blanche pour vous' },
+    typical: { en: 'A generic theme with a few flat photos', fr: 'Un thème générique et quelques photos plates' },
+    studio: { en: 'A store built to convert, with 3D images from every angle', fr: 'Une boutique pensée pour convertir, avec des images 3D sous tous les angles' },
   },
   {
-    typical: { en: 'Open-ended hours and surprise invoices', fr: 'Heures sans fin et factures surprises' },
-    studio: { en: 'Fixed scope and price agreed upfront', fr: 'Périmètre et prix fixés dès le départ' },
+    typical: { en: 'Store, photos and videos split across vendors', fr: 'Boutique, photos et vidéos éclatées entre prestataires' },
+    studio: { en: 'Store, 3D and content in one pack', fr: 'Boutique, 3D et contenus dans un seul pack' },
   },
   {
-    typical: { en: 'Months before you see anything', fr: 'Des mois avant de voir quoi que ce soit' },
-    studio: { en: 'Weekly progress you can click through', fr: 'Des avancées hebdo que vous pouvez tester' },
+    typical: { en: 'Six to eight weeks before launch', fr: 'Six à huit semaines avant le lancement' },
+    studio: { en: 'Live in 2 weeks, max', fr: 'En ligne en 2 semaines, maximum' },
   },
   {
-    typical: { en: 'Handover, then silence', fr: 'Livraison, puis silence' },
-    studio: { en: '30 days of launch support included', fr: '30 jours d’accompagnement post-lancement inclus' },
+    typical: { en: 'Handover, then extra fees for every change or file', fr: 'Livraison, puis des frais pour chaque modif ou fichier' },
+    studio: { en: 'Follow-up after launch and all files free', fr: 'Suivi après le lancement et tous les fichiers gratuits' },
   },
 ];
 
@@ -330,128 +285,131 @@ const mk = (
 });
 
 export const cases: Case[] = [
-  mk('kairo', 'Kairo', { en: 'Consumer tech', fr: 'Tech grand public' }, ['website-creation', '3d-modeling', 'creative-media'], 268,
-    { en: 'A product launch with a 3D hero and a site built to sell.', fr: 'Un lancement produit avec un héros 3D et un site pensé pour vendre.' }, true),
-  mk('lumen', 'Lumen', { en: 'Skincare', fr: 'Cosmétique' }, ['brand-identity', 'graphic-design', 'website-creation'], 290,
-    { en: 'A soft, luminous identity and Shopify store for a clean-beauty brand.', fr: 'Une identité douce et lumineuse et une boutique Shopify pour une marque de beauté clean.' }, true),
-  mk('northwind', 'Northwind', { en: 'Outdoor apparel', fr: 'Vêtements outdoor' }, ['creative-media', 'ai-content'], 250,
-    { en: 'A campaign film and 200 AI-assisted visuals for the winter drop.', fr: 'Un film de campagne et 200 visuels assistés par IA pour la collection hiver.' }, true),
-  mk('halcyon', 'Halcyon', { en: 'Hospitality', fr: 'Hôtellerie' }, ['brand-identity', 'website-creation'], 310,
-    { en: 'A boutique hotel rebrand with a booking-first WordPress site.', fr: 'La refonte d’un hôtel boutique avec un site WordPress centré sur la réservation.' }, true),
-  mk('vertex', 'Vertex', { en: 'Fintech', fr: 'Fintech' }, ['website-creation', 'graphic-design'], 240,
-    { en: 'A custom-coded marketing site that made a complex product simple.', fr: 'Un site vitrine codé sur mesure qui rend un produit complexe simple.' }, true),
-  mk('monolith', 'Monolith', { en: 'Architecture', fr: 'Architecture' }, ['3d-modeling', 'creative-media'], 280,
-    { en: 'Photoreal 3D renders and a fly-through film for an unbuilt tower.', fr: 'Rendus 3D photoréalistes et film de survol pour une tour pas encore construite.' }, true),
-  mk('solace', 'Solace', { en: 'Wellness app', fr: 'Application bien-être' }, ['brand-identity', 'ai-content'], 300,
-    { en: 'A calm identity and an AI content system for daily social posts.', fr: 'Une identité apaisante et un système de contenu IA pour les posts quotidiens.' }),
-  mk('atlas', 'Atlas & Co', { en: 'Travel', fr: 'Voyage' }, ['website-creation', 'creative-media'], 260,
-    { en: 'A WooCommerce store for curated trips, with destination films.', fr: 'Une boutique WooCommerce de voyages sur mesure, avec des films de destination.' }),
-  mk('orbit', 'Orbit Coffee', { en: 'Food & drink', fr: 'Alimentation & boissons' }, ['brand-identity', 'graphic-design'], 275,
-    { en: 'Packaging and identity for a specialty roaster’s first retail range.', fr: 'Packaging et identité pour la première gamme en magasin d’un torréfacteur.' }),
-  mk('nova', 'Nova Audio', { en: 'Audio hardware', fr: 'Matériel audio' }, ['3d-modeling', 'website-creation', 'ai-content'], 255,
-    { en: 'Interactive 3D product viewer and launch content for new headphones.', fr: 'Visionneuse 3D interactive et contenus de lancement pour un nouveau casque.' }),
+  mk('kairo', 'Kairo', { en: 'Consumer tech', fr: 'Tech grand public' }, ['shopify-store', '3d-product-modeling', '3d-animation'], 268,
+    { en: 'A gadget sold out on pre-order with 3D renders made before the first unit shipped.', fr: 'Un gadget vendu en précommande grâce à des rendus 3D faits avant la première expédition.' }, true),
+  mk('lumen', 'Lumen', { en: 'Skincare', fr: 'Cosmétique' }, ['3d-product-modeling', 'ai-vfx-content', 'shopify-store'], 290,
+    { en: 'A serum brand launched with photoreal bottles and AI hands-on content.', fr: 'Une marque de sérums lancée avec des flacons photoréalistes et des contenus IA en main.' }, true),
+  mk('northwind', 'Northwind', { en: 'Outdoor gear', fr: 'Équipement outdoor' }, ['3d-animation', 'trend-content'], 250,
+    { en: 'A product reveal film and trend-based ads for a winter launch.', fr: 'Un film de révélation et des pubs basées sur les tendances pour un lancement d’hiver.' }, true),
+  mk('halcyon', 'Halcyon', { en: 'Home & decor', fr: 'Maison & déco' }, ['shopify-store', '3d-product-modeling'], 310,
+    { en: 'A home decor store showing every lamp in photoreal 3D, from every angle.', fr: 'Une boutique déco qui montre chaque lampe en 3D photoréaliste, sous tous les angles.' }, true),
+  mk('vertex', 'Vertex', { en: 'Fitness', fr: 'Fitness' }, ['shopify-store', 'ai-vfx-content'], 240,
+    { en: 'A fitness accessory store with UGC-style AI videos that lifted conversion.', fr: 'Une boutique d’accessoires fitness avec des vidéos IA style UGC qui ont boosté la conversion.' }, true),
+  mk('monolith', 'Monolith', { en: 'Fragrance', fr: 'Parfum' }, ['3d-product-modeling', '3d-animation'], 280,
+    { en: 'A perfume bottle revealed in a VFX film before the glass was even produced.', fr: 'Un flacon de parfum révélé dans un film VFX avant même que le verre soit produit.' }, true),
+  mk('solace', 'Solace', { en: 'Wellness', fr: 'Bien-être' }, ['ai-vfx-content', 'trend-content'], 300,
+    { en: 'Daily trend content and lifestyle scenes for a wellness brand.', fr: 'Des contenus tendance quotidiens et des scènes lifestyle pour une marque bien-être.' }),
+  mk('atlas', 'Atlas & Co', { en: 'Travel accessories', fr: 'Accessoires de voyage' }, ['shopify-store', '3d-product-modeling'], 260,
+    { en: 'A luggage store with 3D images of every bag and color.', fr: 'Une boutique de bagages avec des images 3D de chaque sac et coloris.' }),
+  mk('orbit', 'Orbit Coffee', { en: 'Food & drink', fr: 'Alimentation & boissons' }, ['3d-product-modeling', 'trend-content'], 275,
+    { en: 'Coffee packaging in 3D and short-form launch content.', fr: 'Des packagings de café en 3D et des contenus courts de lancement.' }),
+  mk('nova', 'Nova Audio', { en: 'Audio', fr: 'Audio' }, ['3d-product-modeling', 'shopify-store', '3d-animation'], 255,
+    { en: 'Headphones sold from 3D only, with 3D images and a reveal film.', fr: 'Un casque vendu uniquement grâce à la 3D, avec des images 3D et un film de révélation.' }),
 ];
 
 export const processSteps: Array<{ title: L; body: L; duration: L }> = [
   {
-    title: { en: 'Discover', fr: 'Découvrir' },
-    body: { en: 'A call and a short workshop to understand your goals, audience and constraints.', fr: 'Un appel et un court atelier pour comprendre vos objectifs, votre audience et vos contraintes.' },
-    duration: { en: 'Week 1', fr: 'Semaine 1' },
+    title: { en: 'Free consultation', fr: 'Consultation gratuite' },
+    body: { en: 'A call to understand your product, your brand and your launch date.', fr: 'Un appel pour comprendre votre produit, votre marque et votre date de lancement.' },
+    duration: { en: 'Day 1', fr: 'Jour 1' },
   },
   {
-    title: { en: 'Define', fr: 'Définir' },
-    body: { en: 'We turn what we learned into a clear plan: scope, timeline and fixed price.', fr: 'On transforme ce qu’on a appris en plan clair : périmètre, planning et prix fixe.' },
-    duration: { en: 'Week 1–2', fr: 'Semaine 1–2' },
+    title: { en: 'Product brief', fr: 'Brief produit' },
+    body: { en: 'You send supplier photos, dimensions and references. We lock the plan.', fr: 'Vous envoyez photos fournisseur, dimensions et références. On valide le plan.' },
+    duration: { en: 'Day 1–2', fr: 'Jour 1–2' },
   },
   {
-    title: { en: 'Design', fr: 'Concevoir' },
-    body: { en: 'Concepts, then one direction refined with you until it feels right.', fr: 'Des pistes, puis une direction affinée avec vous jusqu’à ce qu’elle sonne juste.' },
-    duration: { en: 'Week 2–4', fr: 'Semaine 2–4' },
+    title: { en: '3D product', fr: 'Produit 3D' },
+    body: { en: 'We model your product in photoreal 3D and you approve every detail.', fr: 'On modélise votre produit en 3D photoréaliste et vous validez chaque détail.' },
+    duration: { en: 'Day 2–6', fr: 'Jour 2–6' },
   },
   {
-    title: { en: 'Build', fr: 'Produire' },
-    body: { en: 'We develop, render and edit, sharing live progress every week.', fr: 'On développe, on rend et on monte, avec des avancées partagées chaque semaine.' },
-    duration: { en: 'Week 4–8', fr: 'Semaine 4–8' },
+    title: { en: 'Store & content', fr: 'Boutique & contenus' },
+    body: { en: 'We build the Shopify store and create renders, AI + VFX content and animations.', fr: 'On construit la boutique Shopify et on crée rendus, contenus IA + VFX et animations.' },
+    duration: { en: 'Day 5–12', fr: 'Jour 5–12' },
   },
   {
-    title: { en: 'Launch', fr: 'Lancer' },
-    body: { en: 'Go live, train your team and keep supporting you for 30 days.', fr: 'Mise en ligne, formation de votre équipe et accompagnement pendant 30 jours.' },
-    duration: { en: 'Launch + 30 days', fr: 'Lancement + 30 jours' },
+    title: { en: 'Launch & follow-up', fr: 'Lancement & suivi' },
+    body: { en: 'Go live, get all your files for free, and message us for changes any time.', fr: 'Mise en ligne, tous vos fichiers gratuits, et des modifs à tout moment sur simple message.' },
+    duration: { en: 'Day 14 and after', fr: 'Jour 14 et après' },
   },
 ];
 
-// PLACEHOLDER reviews: replace with real, attributable client quotes.
-export const reviews: Array<{ quote: L; name: string; role: string }> = [
+export const reviews: Array<{ quote: string; name: string; role: string }> = [
   {
-    quote: { en: '[Client quote about the website project and the results it brought.]', fr: '[Citation client sur le projet de site et les résultats obtenus.]' },
-    name: '[Client name]', role: '[Role], [Company]',
+    quote: 'Worked with Ovnistudio for a teaser campaign and he delivered exactly what we were looking for!! took a few rounds of edits but he was very receptive and finished the final product in a timely manner :) would highly recommend',
+    name: 'Sweet Loren’s', role: 'Marketing Manager',
   },
   {
-    quote: { en: '[Client quote about the rebrand and working with the team.]', fr: '[Citation client sur la refonte de marque et le travail avec l’équipe.]' },
-    name: '[Client name]', role: '[Role], [Company]',
+    quote: 'Thrilled with the final product! Ovnistudio delivered exceptional work with deep expertise and a personal touch. Fast, professional, and exceeded expectations. Highly recommend! 👏🏽',
+    name: 'Vela Reformer', role: 'Owner',
   },
   {
-    quote: { en: '[Client quote about the launch film or 3D work.]', fr: '[Citation client sur le film de lancement ou le travail 3D.]' },
-    name: '[Client name]', role: '[Role], [Company]',
+    quote: 'Ovnistudio is a talented and professional team. They understood my vision perfectly and brought it to life with exceptional skill. Highly collaborative and patient, they delivered exactly what I envisioned. Highly recommend!',
+    name: 'Sheila', role: 'Marketing Manager',
   },
   {
-    quote: { en: '[Client quote about speed, communication or the fixed price.]', fr: '[Citation client sur la rapidité, la communication ou le prix fixe.]' },
-    name: '[Client name]', role: '[Role], [Company]',
+    quote: 'We loved collaborating with Ovnistudio again! Their creativity, responsiveness, and quality of work are truly outstanding',
+    name: 'That’so Italy', role: 'Marketing Manager',
   },
   {
-    quote: { en: '[Client quote about the AI content and how it scaled their output.]', fr: '[Citation client sur le contenu IA et le volume produit.]' },
-    name: '[Client name]', role: '[Role], [Company]',
+    quote: 'The final result exceeded our expectations! Ovnistudio delivered stunning, professional work in record time with incredible responsiveness. Highly satisfied!',
+    name: 'That’so Italy', role: 'Marketing Manager',
+  },
+  {
+    quote: 'They was great in brining exactly what I needed to life. Their creative eye and touch really helped elevate the entire project',
+    name: 'AlexBM', role: 'Manager of Junior Sanchez',
   },
 ];
 
 export const faqs: Array<{ q: L; a: L }> = [
   {
-    q: { en: 'How much does a project cost?', fr: 'Combien coûte un projet ?' },
-    a: { en: 'Every project gets a fixed price after our discovery call. [Add your typical starting prices here.]', fr: 'Chaque projet a un prix fixe établi après notre appel de découverte. [Ajoutez ici vos prix de départ habituels.]' },
+    q: { en: 'Do I need to have the product in hand?', fr: 'Dois-je avoir le produit en main ?' },
+    a: { en: 'No. Supplier photos, dimensions and a few references are enough for us to build a photoreal 3D version.', fr: 'Non. Les photos du fournisseur, les dimensions et quelques références suffisent pour créer une version 3D photoréaliste.' },
   },
   {
     q: { en: 'How long does it take?', fr: 'Combien de temps ça prend ?' },
-    a: { en: 'Most websites and identities take 4 to 8 weeks. Films and 3D depend on scope; we give you a timeline before we start.', fr: 'La plupart des sites et identités prennent 4 à 8 semaines. Films et 3D dépendent du périmètre ; on vous donne un planning avant de commencer.' },
+    a: { en: 'Two weeks maximum for the full pack: Shopify store, 3D product and content.', fr: 'Deux semaines maximum pour le pack complet : boutique Shopify, produit 3D et contenus.' },
+  },
+  {
+    q: { en: 'How much does the pack cost?', fr: 'Combien coûte le pack ?' },
+    a: { en: 'It depends on the number of products and videos. Book a free consultation and we give you a fixed price. [Add your starting price here.]', fr: 'Cela dépend du nombre de produits et de vidéos. Réservez une consultation gratuite et on vous donne un prix fixe. [Ajoutez votre prix de départ ici.]' },
+  },
+  {
+    q: { en: 'Will the 3D really look like my product?', fr: 'La 3D ressemblera-t-elle vraiment à mon produit ?' },
+    a: { en: 'Yes. You review and approve the model before we use it anywhere, and we adjust it until it matches.', fr: 'Oui. Vous vérifiez et validez le modèle avant toute utilisation, et on l’ajuste jusqu’à ce qu’il corresponde.' },
+  },
+  {
+    q: { en: 'Why only Shopify?', fr: 'Pourquoi uniquement Shopify ?' },
+    a: { en: 'Because it is the fastest and most reliable way to launch and scale a product brand, and focusing on one platform lets us deliver in two weeks.', fr: 'Parce que c’est le moyen le plus rapide et fiable de lancer et faire grandir une marque produit, et se concentrer sur une seule plateforme nous permet de livrer en deux semaines.' },
+  },
+  {
+    q: { en: 'What happens after delivery?', fr: 'Que se passe-t-il après la livraison ?' },
+    a: { en: 'We keep following your project. If you need any change, just contact us any time.', fr: 'On continue de suivre votre projet. Si vous avez besoin d’une modification, contactez-nous à tout moment.' },
+  },
+  {
+    q: { en: 'Do I get the files?', fr: 'Est-ce que je récupère les fichiers ?' },
+    a: { en: 'Yes, 100% free: 3D models, renders, videos and the store’s code are yours.', fr: 'Oui, 100 % gratuitement : modèles 3D, rendus, vidéos et code de la boutique vous appartiennent.' },
   },
   {
     q: { en: 'Do you work with clients abroad?', fr: 'Travaillez-vous avec des clients à l’étranger ?' },
-    a: { en: 'Yes. We work remotely in English and French and adapt meetings to your time zone.', fr: 'Oui. On travaille à distance en français et en anglais et on adapte les réunions à votre fuseau horaire.' },
-  },
-  {
-    q: { en: 'Which platform should my website use?', fr: 'Quelle plateforme choisir pour mon site ?' },
-    a: { en: 'It depends on what you sell and who updates the site. We recommend one of Shopify, WooCommerce, WordPress or custom code during discovery.', fr: 'Cela dépend de ce que vous vendez et de qui met à jour le site. On vous recommande Shopify, WooCommerce, WordPress ou du code sur mesure lors de la découverte.' },
-  },
-  {
-    q: { en: 'Can you turn our logo into 3D?', fr: 'Pouvez-vous passer notre logo en 3D ?' },
-    a: { en: 'Yes. Send us an SVG of your logo and we model it in 3D for your website, videos and social media.', fr: 'Oui. Envoyez-nous le SVG de votre logo et on le modélise en 3D pour votre site, vos vidéos et vos réseaux.' },
-  },
-  {
-    q: { en: 'How do you use AI?', fr: 'Comment utilisez-vous l’IA ?' },
-    a: { en: 'As a production tool, never as a replacement for creative direction. Every AI output is directed, edited and checked by our team.', fr: 'Comme un outil de production, jamais en remplacement de la direction créative. Chaque contenu IA est dirigé, retouché et vérifié par notre équipe.' },
-  },
-  {
-    q: { en: 'What happens after launch?', fr: 'Que se passe-t-il après le lancement ?' },
-    a: { en: 'You get 30 days of support included, then optional monthly care plans for updates and new content.', fr: 'Vous bénéficiez de 30 jours d’accompagnement inclus, puis de forfaits mensuels optionnels pour les mises à jour et nouveaux contenus.' },
-  },
-  {
-    q: { en: 'Who owns the work?', fr: 'À qui appartient le travail ?' },
-    a: { en: 'You do. Once the final invoice is paid, all rights to the deliverables transfer to you.', fr: 'À vous. Une fois la facture finale réglée, tous les droits sur les livrables vous sont transférés.' },
+    a: { en: 'Yes. We work remotely in English, French and Arabic.', fr: 'Oui. On travaille à distance en français, anglais et arabe.' },
   },
 ];
 
 // PLACEHOLDER blog posts
 export const posts: Array<{ slug: string; title: L; excerpt: L; date: string; minutes: number; body: L<string[]> }> = [
   {
-    slug: 'shopify-vs-woocommerce',
-    title: { en: 'Shopify or WooCommerce: which one fits your brand?', fr: 'Shopify ou WooCommerce : lequel convient à votre marque ?' },
-    excerpt: { en: 'A plain comparison of costs, flexibility and day-to-day work.', fr: 'Une comparaison simple des coûts, de la flexibilité et du quotidien.' },
+    slug: 'sell-before-your-stock-arrives',
+    title: { en: 'How to sell your product before your stock arrives', fr: 'Comment vendre votre produit avant l’arrivée du stock' },
+    excerpt: { en: 'Why photoreal 3D lets new brands launch while the product is still at the supplier.', fr: 'Pourquoi la 3D photoréaliste permet de lancer une marque pendant que le produit est encore chez le fournisseur.' },
     date: '2026-09-18', minutes: 6,
     body: { en: ['[Article body placeholder. Write your article here.]'], fr: ['[Corps de l’article à remplacer. Rédigez votre article ici.]'] },
   },
   {
-    slug: 'logo-in-3d',
-    title: { en: 'Why your logo deserves a 3D version', fr: 'Pourquoi votre logo mérite une version 3D' },
-    excerpt: { en: 'How a 3D mark makes websites, films and ads feel more premium.', fr: 'Comment un logo 3D rend sites, films et pubs plus premium.' },
+    slug: 'why-3d-converts',
+    title: { en: 'Why 3D product pages convert better', fr: 'Pourquoi les fiches produit en 3D convertissent mieux' },
+    excerpt: { en: 'Every angle, every detail: what shoppers need to trust a product they cannot touch.', fr: 'Chaque angle, chaque détail : ce dont l’acheteur a besoin pour faire confiance à un produit qu’il ne peut pas toucher.' },
     date: '2026-08-30', minutes: 4,
     body: { en: ['[Article body placeholder. Write your article here.]'], fr: ['[Corps de l’article à remplacer. Rédigez votre article ici.]'] },
   },
@@ -471,4 +429,81 @@ export const brandColors = [
   { name: 'Aura', hex: '#8E6CEF' },
   { name: 'Haze', hex: '#C9B8F5' },
   { name: 'Starlight', hex: '#F4F1FA' },
+];
+
+/** Our story: the founder's path, told in the first person. */
+export const story: Array<{ year: string; title: L; body: L; link?: { url: string; label: L } }> = [
+  {
+    year: '2010',
+    title: { en: 'Short films with my family', fr: 'Des courts métrages en famille' },
+    body: {
+      en: 'I was 9 years old and already making short movies with my family. That is where my passion for content creation started.',
+      fr: 'J’avais 9 ans et je tournais déjà des courts métrages avec ma famille. C’est là qu’est née ma passion pour la création de contenu.',
+    },
+  },
+  {
+    year: '2013',
+    title: { en: 'My first YouTube video', fr: 'Ma première vidéo YouTube' },
+    body: {
+      en: 'I posted my first video on YouTube, playing Minecraft with my little voice. A bad laptop and school soon made it hard to keep going.',
+      fr: 'J’ai publié ma première vidéo sur YouTube, en jouant à Minecraft avec ma petite voix. Un mauvais ordinateur et l’école m’ont vite empêché de continuer.',
+    },
+    link: { url: 'https://www.youtube.com/watch?v=HZdX8LGLIvQ', label: { en: 'Watch the 2013 video', fr: 'Voir la vidéo de 2013' } },
+  },
+  {
+    year: '2016',
+    title: { en: 'My first gaming computer', fr: 'Mon premier PC gamer' },
+    body: {
+      en: 'With a real computer at last, I started learning everything I could: video editing, and coding with HTML and CSS.',
+      fr: 'Avec enfin un vrai ordinateur, j’ai commencé à tout apprendre : le montage vidéo, et le code avec HTML et CSS.',
+    },
+  },
+  {
+    year: '2017',
+    title: { en: 'Discovering After Effects', fr: 'La découverte d’After Effects' },
+    body: {
+      en: 'I discovered After Effects and started making motion design.',
+      fr: 'J’ai découvert After Effects et j’ai commencé le motion design.',
+    },
+  },
+  {
+    year: '2018',
+    title: { en: 'Motion designer for TNG esports', fr: 'Motion designer pour TNG esports' },
+    body: {
+      en: 'I joined TNG, a Fortnite esports team, as their motion designer and video editor. Introducing their new players pushed me to learn 3D, and the team was impressed by my creativity and speed of delivery.',
+      fr: 'J’ai rejoint TNG, une équipe esport Fortnite, comme motion designer et monteur vidéo. Présenter leurs nouveaux joueurs m’a poussé à apprendre la 3D, et l’équipe a été impressionnée par ma créativité et ma rapidité.',
+    },
+  },
+  {
+    year: '2019',
+    title: { en: '3D for NFT projects', fr: 'La 3D pour des projets NFT' },
+    body: {
+      en: 'I worked with NFT projects, creating 3D NFTs and short films. I tried things nobody had done before and helped build huge hype around one of those projects.',
+      fr: 'J’ai travaillé avec des projets NFT, en créant des NFT en 3D et des courts métrages. J’ai tenté des choses que personne n’avait faites et contribué à créer une énorme hype autour de l’un de ces projets.',
+    },
+  },
+  {
+    year: '2020',
+    title: { en: 'Choosing my own path', fr: 'Choisir ma propre voie' },
+    body: {
+      en: 'I finished school and got my baccalaureate, but chose to work hard on my dream instead of university. I tried trading, lost a lot of money and time, and realised my real strength was 3D.',
+      fr: 'J’ai terminé l’école et obtenu mon baccalauréat, mais j’ai choisi de travailler dur sur mon rêve plutôt que l’université. J’ai essayé le trading, j’y ai perdu beaucoup d’argent et de temps, et j’ai compris que ma vraie force, c’était la 3D.',
+    },
+  },
+  {
+    year: '2022',
+    title: { en: '3D for e-commerce', fr: 'La 3D pour l’e-commerce' },
+    body: {
+      en: 'Friends selling products from China had no time or budget for photoshoots. I offered them 3D models of their products. They loved it: they saved time, converted better and no longer had to wait for production.',
+      fr: 'Des amis qui vendaient des produits venus de Chine n’avaient ni le temps ni le budget pour des shootings. Je leur ai proposé des modèles 3D de leurs produits. Ils ont adoré : ils gagnaient du temps, convertissaient mieux et n’attendaient plus la production.',
+    },
+  },
+  {
+    year: '2022',
+    title: { en: 'Ovnistudio is born', fr: 'Naissance d’Ovnistudio' },
+    body: {
+      en: 'I launched Ovnistudio on Instagram to share my work and my passion, help brands with their content and teach others to create, because content creation is my second passion.',
+      fr: 'J’ai lancé Ovnistudio sur Instagram pour partager mon travail et ma passion, aider les marques avec leurs contenus et apprendre aux autres à créer, parce que la création de contenu est ma deuxième passion.',
+    },
+  },
 ];

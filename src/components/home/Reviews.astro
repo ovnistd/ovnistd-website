@@ -1,66 +1,59 @@
 ---
 import SectionHead from '../SectionHead.astro';
+import { reviews, studio } from '../../data/site';
 import Icon from '../Icon.astro';
-import { reviews } from '../../data/site';
 import { ui, t, type Lang } from '../../i18n';
 interface Props { lang: Lang; head?: boolean }
 const { lang, head = true } = Astro.props;
+const hues = [320, 210, 140, 30, 30, 260];
+const star = 'M12 3.5l2.5 5.3 5.8.7-4.3 4 1.1 5.7L12 16.4 6.9 19.2 8 13.5 3.7 9.5l5.8-.7z';
 ---
-<section class="section reviews" data-carousel>
+<section class="section reviews">
+  <div class="glow reviews__glow"></div>
   <div class="container">
     {head && <SectionHead tag={t(ui.sections.reviews.tag, lang)} title={t(ui.sections.reviews.title, lang)} sub={t(ui.sections.reviews.sub, lang)} />}
-    <div class="track" data-track>
-      {reviews.map((r) => (
-        <figure class="review card">
-          <div class="stars">{Array.from({ length: 5 }, () => <Icon name="star" size={14} />)}</div>
-          <blockquote>{t(r.quote, lang)}</blockquote>
+    <div class="wall">
+      {reviews.map((r, i) => (
+        <figure class="review" data-reveal style={`transition-delay:${(i % 3) * 80}ms`}>
+          <div class="stars" aria-label="5 stars">
+            {Array.from({ length: 5 }, () => <svg viewBox="0 0 24 24" width="14" height="14"><path d={star} /></svg>)}
+          </div>
+          <blockquote>“{r.quote}”</blockquote>
           <figcaption>
-            <span class="avatar">{r.name.replace(/[^A-Za-z]/g, '').slice(0, 1) || '?'}</span>
+            <span class="avatar" style={`--h:${hues[i % hues.length]}`}>{r.name.replace(/[^A-Za-z]/g, '').slice(0, 1)}</span>
             <span><strong>{r.name}</strong><small>{r.role}</small></span>
           </figcaption>
         </figure>
       ))}
     </div>
-    <div class="controls">
-      <div class="dots" data-dots>{reviews.map((_, i) => <span class:list={{ on: i === 0 }}></span>)}</div>
-      <div class="arrows">
-        <button aria-label="Previous" data-prev><Icon name="chevron-left" size={16} /></button>
-        <button aria-label="Next" data-next><Icon name="chevron-right" size={16} /></button>
-      </div>
+    <div class="reviews__more">
+      <a class="btn btn--ghost" href={studio.trustpilot} target="_blank" rel="noopener">
+        <Icon name="star" size={14} /> {lang === 'fr' ? 'Voir nos avis sur Trustpilot' : 'See our reviews on Trustpilot'} <Icon name="arrow-up-right" size={12} />
+      </a>
     </div>
   </div>
 </section>
 <style>
-  .track { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 32px) / 3); gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px; }
-  .track::-webkit-scrollbar { display: none; }
-  .review { margin: 0; padding: 28px; display: grid; gap: 20px; align-content: space-between; scroll-snap-align: start; min-height: 240px; }
-  .stars { display: flex; gap: 2px; color: var(--purple-4); }
-  blockquote { margin: 0; font-size: 16px; color: var(--text); line-height: 1.6; }
-  figcaption { display: flex; gap: 12px; align-items: center; padding-top: 18px; border-top: 1px solid var(--line); }
-  figcaption span:last-child { display: grid; font-size: 14px; }
-  figcaption strong { font-weight: 500; }
-  figcaption small { color: var(--text-3); font-size: 13px; }
-  .avatar { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 14px; font-weight: 600; color: #120e1c; background: linear-gradient(145deg, #fff, #c9b8f5 40%, #6a4fb0); }
-  .controls { display: flex; justify-content: space-between; align-items: center; margin-top: 28px; }
-  .dots { display: flex; gap: 6px; }
-  .dots span { width: 6px; height: 6px; border-radius: 3px; background: var(--line-2); transition: width .3s, background .3s; }
-  .dots span.on { width: 22px; background: #fff; }
-  .arrows { display: flex; gap: 8px; }
-  .arrows button { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line-2); background: rgba(255,255,255,.03); display: grid; place-items: center; transition: background .2s, color .2s; }
-  .arrows button:hover { background: #fff; color: #120e1c; }
-  @media (max-width: 900px) { .track { grid-auto-columns: 75%; } }
-  @media (max-width: 560px) { .track { grid-auto-columns: 88%; } }
+  .reviews__glow { width: 700px; height: 600px; left: 50%; top: 45%; transform: translate(-50%, -30%); }
+  .reviews__more { position: relative; z-index: 1; display: flex; justify-content: center; margin-top: 40px; }
+  .reviews__more :global(svg:first-child) { color: #00b67a; }
+  .wall { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: start; }
+  @media (max-width: 960px) { .wall { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 620px) { .wall { grid-template-columns: 1fr; } }
+  .review {
+    margin: 0; padding: 24px 24px 26px; display: grid; gap: 18px;
+    border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.09);
+    background: linear-gradient(180deg, rgba(20, 16, 30, 0.88), rgba(10, 9, 14, 0.92));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition: border-color 0.3s;
+  }
+  .review:hover { border-color: rgba(196, 176, 255, 0.25); }
+  .stars { display: flex; gap: 3px; }
+  .stars svg { fill: none; stroke: var(--text-3); stroke-width: 1.4; stroke-linejoin: round; }
+  blockquote { margin: 0; font-size: 16px; line-height: 1.6; color: #dcd6e8; }
+  figcaption { display: flex; gap: 12px; align-items: center; margin-top: 6px; }
+  figcaption > span:last-child { display: grid; gap: 2px; }
+  figcaption strong { font-weight: 500; font-size: 16px; color: var(--text); }
+  figcaption small { color: var(--text-2); font-size: 14px; }
+  .avatar { width: 36px; height: 36px; flex: none; border-radius: 50%; display: grid; place-items: center; font-weight: 600; font-size: 14px; color: #fff; background: radial-gradient(circle at 30% 30%, hsl(var(--h) 70% 70%), hsl(var(--h) 60% 35%)); border: 1px solid rgba(255,255,255,.2); }
 </style>
-<script>
-  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
-    const track = root.querySelector<HTMLElement>('[data-track]')!;
-    const dots = [...root.querySelectorAll<HTMLElement>('[data-dots] span')];
-    const step = () => (track.firstElementChild as HTMLElement).offsetWidth + 16;
-    root.querySelector('[data-prev]')!.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
-    root.querySelector('[data-next]')!.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
-    track.addEventListener('scroll', () => {
-      const i = Math.round(track.scrollLeft / step());
-      dots.forEach((d, j) => d.classList.toggle('on', j === Math.min(i, dots.length - 1)));
-    }, { passive: true });
-  });
-</script>

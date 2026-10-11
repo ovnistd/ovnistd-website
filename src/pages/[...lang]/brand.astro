@@ -12,14 +12,14 @@ const fr = lang === 'fr';
 ---
 <Base lang={lang} title={fr ? 'Kit de marque' : 'Brand kit'} description={fr ? 'Logo, couleurs et typographie Ovnistudio.' : 'Ovnistudio logo, colors and typography.'}>
   <PageHero lang={lang} tag={fr ? 'Kit de marque' : 'Brand kit'} title={fr ? 'Ovnistudio,\nmode d’emploi' : 'Ovnistudio\nbrand kit'} sub={fr ? 'Logo, couleurs et typographie pour la presse et les partenaires.' : 'Logo, colors and typography for press and partners.'} crumbs={[{ label: fr ? 'Kit de marque' : 'Brand kit', path: '/brand' }]}>
-    <div><a class="btn btn--primary" href="/brand/ovnistudio-brand-kit.zip" download>{fr ? 'Télécharger le kit' : 'Download kit'} <Icon name="download" size={14} /></a> <span class="placeholder-note">{fr ? 'Fichier à ajouter dans public/brand/' : 'Add the file in public/brand/'}</span></div>
+    <div><a class="btn btn--primary" href="/brand/ovnistudio-mark.svg" download>{fr ? 'Télécharger le logo (SVG)' : 'Download logo (SVG)'} <Icon name="download" size={14} /></a> <a class="btn btn--ghost" href="/brand/ovnistudio-mark-512.png" download>PNG <Icon name="download" size={14} /></a></div>
   </PageHero>
   <section class="section" style="padding-top:0">
     <div class="container">
       <SectionHead tag="Logo" title={fr ? 'Le logo' : 'The logo'} />
       <div class="logos">
         <div class="card lbox"><Logo /></div>
-        <div class="lbox lbox--light"><Logo /></div>
+        <div class="lbox lbox--light"><Logo solid /></div>
       </div>
       <SectionHead tag={fr ? 'Couleurs' : 'Colors'} title={fr ? 'La palette' : 'The palette'} />
       <div class="colors">{brandColors.map((c) => (

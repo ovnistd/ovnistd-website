@@ -7,10 +7,10 @@ import { langPaths, ui, t, type Lang } from '../../i18n';
 export function getStaticPaths() { return langPaths(); }
 const { lang } = Astro.props as { lang: Lang };
 const fr = lang === 'fr';
-const budgets = fr ? ['< 3 k€', '3–10 k€', '10–25 k€', '25 k€ +'] : ['< €3k', '€3–10k', '€10–25k', '€25k +'];
+const stages = fr ? ['Chez le fournisseur', 'En entrepôt', 'Déjà en main', 'Encore une idée'] : ['At the supplier', 'In a warehouse', 'Already in hand', 'Still an idea'];
 ---
 <Base lang={lang} title={t(ui.nav.contact, lang)} description={t(ui.sections.cta.sub, lang)}>
-  <PageHero lang={lang} tag={t(ui.nav.contact, lang)} title={fr ? 'Parlons de\nvotre projet' : 'Let’s talk about\nyour project'} sub={t(ui.sections.cta.sub, lang)} crumbs={[{ label: t(ui.nav.contact, lang), path: '/contact' }]} />
+  <PageHero lang={lang} tag={t(ui.nav.contact, lang)} title={fr ? 'Réservez votre\nconsultation gratuite' : 'Book your\nfree consultation'} sub={t(ui.sections.cta.sub, lang)} crumbs={[{ label: t(ui.nav.contact, lang), path: '/contact' }]} />
   <section class="section" style="padding-top:0">
     <div class="container wrap">
       <form class="card form" action={studio.formEndpoint} method="POST">
@@ -19,19 +19,18 @@ const budgets = fr ? ['< 3 k€', '3–10 k€', '10–25 k€', '25 k€ +'] : 
           <label>Email<input name="email" type="email" required autocomplete="email" /></label>
         </div>
         <label>{fr ? 'Entreprise' : 'Company'}<input name="company" autocomplete="organization" /></label>
-        <fieldset><legend>{fr ? 'Services' : 'Services'}</legend>
+        <fieldset><legend>{fr ? 'Ce dont vous avez besoin' : 'What you need'}</legend>
           <div class="opts">{services.map((s) => <label class="opt"><input type="checkbox" name="services" value={s.slug} /><span>{t(s.title, lang)}</span></label>)}</div>
         </fieldset>
-        <fieldset><legend>Budget</legend>
-          <div class="opts">{budgets.map((b) => <label class="opt"><input type="radio" name="budget" value={b} /><span>{b}</span></label>)}</div>
+        <fieldset><legend>{fr ? 'Où en est votre produit ?' : 'Where is your product now?'}</legend>
+          <div class="opts">{stages.map((b) => <label class="opt"><input type="radio" name="product_stage" value={b} /><span>{b}</span></label>)}</div>
         </fieldset>
-        <label>{fr ? 'Votre projet' : 'Your project'}<textarea name="message" rows="5" required></textarea></label>
+        <label>{fr ? 'Parlez-nous de votre produit' : 'Tell us about your product'}<textarea name="message" rows="5" required></textarea></label>
         <button class="btn btn--primary" type="submit">{fr ? 'Envoyer' : 'Send message'} <span class="btn__icon"><Icon name="arrow-up-right" size={10} /></span></button>
       </form>
       <aside class="side">
         <a class="card item" href={`mailto:${studio.email}`}><span class="chrome"><Icon name="mail" /></span><span><small>Email</small>{studio.email}</span></a>
         <a class="card item" href={`tel:${studio.phone.replace(/\s/g, '')}`}><span class="chrome"><Icon name="phone" /></span><span><small>{fr ? 'Téléphone' : 'Phone'}</small>{studio.phone}</span></a>
-        <div class="card item"><span class="chrome"><Icon name="pin" /></span><span><small>{fr ? 'Studio' : 'Studio'}</small>{studio.address}</span></div>
       </aside>
     </div>
   </section>

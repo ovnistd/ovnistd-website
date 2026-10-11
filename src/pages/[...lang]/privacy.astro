@@ -1,18 +1,38 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
+import { studio } from '../../data/site';
 import { langPaths, type Lang } from '../../i18n';
 export function getStaticPaths() { return langPaths(); }
 const { lang } = Astro.props as { lang: Lang };
 const fr = lang === 'fr';
-const title = fr ? 'Politique de confidentialité' : 'Privacy policy';
+const title = fr ? 'Politique de confidentialité' : 'Privacy Policy';
+const mail = studio.email;
+const sections = fr ? [
+  ['Qui sommes-nous', `OVNISTUDIO est un studio créatif exploité par OVNISTUDIO LLC. Vous pouvez nous écrire à ${mail} pour toute question liée à vos données personnelles.`],
+  ['Ce que nous collectons', 'Lorsque vous nous contactez via le site ou par e-mail, nous recevons les informations que vous choisissez de partager, généralement votre nom, votre adresse e-mail, votre entreprise et les détails de votre projet. Nous ne vendons vos données personnelles à personne.'],
+  ['Comment nous les utilisons', 'Nous utilisons vos informations uniquement pour répondre à votre demande, définir et réaliser votre projet, et échanger avec vous à son sujet. Nous les conservons seulement le temps nécessaire à ces fins ou exigé par la loi.'],
+  ['Cookies et statistiques', 'Ce site utilise des statistiques minimales et respectueuses de la vie privée pour comprendre sa fréquentation. Nous n’utilisons pas de traceurs publicitaires intrusifs.'],
+  ['Vos droits', `Vous pouvez à tout moment nous demander d’accéder à vos données personnelles, de les corriger ou de les supprimer en écrivant à ${mail}.`]
+] : [
+  ['Who we are', `OVNISTUDIO is a creative studio operated by OVNISTUDIO LLC. You can reach us at ${mail} regarding any privacy matter.`],
+  ['What we collect', 'When you contact us through the website or by email, we receive the information you choose to share, typically your name, email address, company and project details. We do not sell your personal data to anyone.'],
+  ['How we use it', 'We use your information solely to respond to your enquiry, scope and deliver your project, and communicate with you about it. We keep it only as long as needed for these purposes or as required by law.'],
+  ['Cookies & analytics', 'This site uses minimal, privacy-respecting analytics to understand traffic. We do not use intrusive advertising trackers.'],
+  ['Your rights', `You can ask us to access, correct or delete the personal information we hold about you at any time by emailing ${mail}.`]
+];
 ---
 <Base lang={lang} title={title} description={title}>
-  <PageHero lang={lang} tag={fr ? 'Légal' : 'Legal'} title={title} sub={fr ? 'Dernière mise à jour : [date]' : 'Last updated: [date]'} crumbs={[{ label: title, path: '/privacy' }]} />
+  <PageHero lang={lang} tag={fr ? 'Légal' : 'Legal'} title={title} sub={fr ? 'Dernière mise à jour : octobre 2026' : 'Last updated: October 2026'} crumbs={[{ label: title, path: '/privacy' }]} />
   <section class="section" style="padding-top:0">
-    <div class="container prose">
-      <p class="placeholder-note" style="justify-self:start">{fr ? 'Texte juridique à fournir par votre conseil' : 'Legal text to be provided by your advisor'}</p>
-      <p>{fr ? '[Collez ici le texte juridique complet.]' : '[Paste the full legal text here.]'}</p>
+    <div class="container">
+      <div class="prose legal">
+        {sections.map(([h, p]) => (<><h2>{h}</h2><p>{p}</p></>))}
+      </div>
     </div>
   </section>
 </Base>
+<style>
+  .legal { max-width: 860px; }
+  .legal h2 { font-size: 20px; margin-top: 16px; }
+</style>

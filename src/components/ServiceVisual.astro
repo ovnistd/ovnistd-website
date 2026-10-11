@@ -1,16 +1,17 @@
 ---
 // Small CSS illustrations inside each service card, echoing the reference's bento visuals.
-interface Props { kind: string }
-const { kind } = Astro.props;
+import Product3D from './Product3D.astro';
+interface Props { kind: string; lang?: 'en' | 'fr' }
+const { kind, lang = 'en' } = Astro.props;
 ---
 <div class={`sv sv--${kind}`} aria-hidden="true">
   {kind === 'web' && (
     <>
       <div class="sv-browser">
-        <div class="sv-browser__bar"><i></i><i></i><i></i><span>ovnistudio.com</span></div>
+        <div class="sv-browser__bar"><i></i><i></i><i></i><span>ovnistudio.net</span></div>
         <div class="sv-browser__body"><b></b><em></em><em class="s"></em><div class="sv-browser__btns"><u></u><u></u></div></div>
       </div>
-      <div class="sv-pills"><span>Shopify</span><span>WooCommerce</span><span>WordPress</span><span>Custom code</span></div>
+      <div class="sv-pills"><span>Shopify</span><span>3D visuals</span><span>Fast checkout</span><span>Upsells</span></div>
     </>
   )}
   {kind === 'brand' && (
@@ -26,11 +27,11 @@ const { kind } = Astro.props;
     </div>
   )}
   {kind === 'cube' && (
-    <div class="sv-cube"><div class="cube"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+    <div class="sv-product"><Product3D /></div>
   )}
   {kind === 'ai' && (
     <div class="sv-ai">
-      <div class="prompt">✦ a chrome UFO over a violet desert, cinematic</div>
+      <div class="prompt">✦ a hand holding the serum bottle, golden hour, UGC style</div>
       <div class="thumbs"><i></i><i></i><i></i></div>
     </div>
   )}
@@ -71,14 +72,8 @@ const { kind } = Astro.props;
   .rec { position: absolute; top: 10px; left: 12px; font-size: 10px; color: #ff8fa3; letter-spacing: .08em; }
   .sv-media__wave { height: 36px; display: flex; align-items: center; gap: 3px; }
   .sv-media__wave i { flex: 1; border-radius: 2px; background: linear-gradient(180deg, #c9b8f5, #4b2a8a); }
-  /* cube */
-  .sv-cube { perspective: 700px; }
-  .cube { width: 96px; height: 96px; position: relative; transform-style: preserve-3d; animation: spin 14s linear infinite; }
-  .cube i { position: absolute; inset: 0; border: 1px solid rgba(201,184,245,.6); background: linear-gradient(145deg, rgba(255,255,255,.25), rgba(75,42,138,.25)); box-shadow: inset 0 0 24px rgba(142,108,239,.4); }
-  .cube i:nth-child(1) { transform: translateZ(48px); } .cube i:nth-child(2) { transform: rotateY(180deg) translateZ(48px); }
-  .cube i:nth-child(3) { transform: rotateY(90deg) translateZ(48px); } .cube i:nth-child(4) { transform: rotateY(-90deg) translateZ(48px); }
-  .cube i:nth-child(5) { transform: rotateX(90deg) translateZ(48px); } .cube i:nth-child(6) { transform: rotateX(-90deg) translateZ(48px); }
-  @keyframes spin { from { transform: rotateX(-24deg) rotateY(0); } to { transform: rotateX(-24deg) rotateY(360deg); } }
+  /* 3D product */
+  .sv-product { width: 100%; height: 100%; min-height: 230px; align-self: stretch; }
   /* ai */
   .sv-ai { display: grid; gap: 12px; width: min(300px, 92%); }
   .prompt { font-size: 12px; color: var(--text-2); padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line-2); background: rgba(18,14,28,.9); box-shadow: 0 0 0 4px rgba(142,108,239,.08); }

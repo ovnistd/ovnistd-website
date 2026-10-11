@@ -21,10 +21,14 @@ npm run build      # static site in dist/, ready for Netlify, Vercel, Cloudflare
 
 ## Your logo in 3D
 
-1. Put your logo SVG at `public/3d/logo.svg` (or a model at `public/3d/logo.glb`).
-2. In `src/data/hero3d.ts` set `mode: 'svg'` (or `'glb'` with `src: '/3d/logo.glb'`).
+The hero uses `public/3d/logo.svg` (traced from the Ovnistudio logo) extruded in chrome.
+To use the Blender model instead, set `mode: 'glb'` and `src: '/3d/logo.glb'` in `src/data/hero3d.ts`.
 
 The SVG is extruded and rendered in the same purple-tinted chrome as the placeholder stars.
+
+## Founder video
+
+Paste the YouTube or Vimeo link into `introVideo` in `src/data/site.ts`. The homepage player embeds it automatically.
 
 ## Videos
 

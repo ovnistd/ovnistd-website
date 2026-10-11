@@ -1,18 +1,38 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
+import { studio } from '../../data/site';
 import { langPaths, type Lang } from '../../i18n';
 export function getStaticPaths() { return langPaths(); }
 const { lang } = Astro.props as { lang: Lang };
 const fr = lang === 'fr';
-const title = fr ? 'Conditions générales' : 'Terms of service';
+const title = fr ? 'Conditions d’utilisation' : 'Terms of Service';
+const mail = studio.email;
+const sections = fr ? [
+  ['Accord', 'En utilisant ce site et en faisant appel à OVNISTUDIO (exploité par OVNISTUDIO LLC), vous acceptez ces conditions. Les conditions propres à chaque projet figurent dans la proposition que nous vous envoyons avant le début des travaux.'],
+  ['Devis et périmètre', 'Chaque projet fait l’objet d’un devis individuel selon son périmètre. La proposition définit les livrables, le calendrier et le prix. Un travail hors de ce périmètre peut nécessiter un devis révisé.'],
+  ['Propriété', 'Une fois le projet entièrement payé, tous les livrables finaux, fichiers sources et éléments que nous créons pour vous vous appartiennent. Jusque-là, ils restent notre propriété.'],
+  ['Révisions et accompagnement', 'Chaque proposition inclut un nombre défini de séries de révisions et une période d’accompagnement après le lancement. Une maintenance continue peut être organisée séparément.'],
+  ['Responsabilité', 'Nous réalisons notre travail avec un soin professionnel, mais nous ne sommes pas responsables des pertes indirectes ou consécutives. Rien dans ces conditions ne limite une responsabilité qui ne peut l’être par la loi.']
+] : [
+  ['Agreement', 'By using this website and engaging OVNISTUDIO (operated by OVNISTUDIO LLC), you agree to these terms. Project-specific terms are set out in the proposal we send you before any work begins.'],
+  ['Quotes & scope', 'Each project is quoted individually based on its scope. The proposal defines deliverables, timeline and price. Work outside that scope may require a revised quote.'],
+  ['Ownership', 'Once a project is paid in full, all final deliverables, source files and assets we create for you become yours. Until then, they remain our property.'],
+  ['Revisions & support', 'Each proposal includes a defined number of revision rounds and a post-launch support window. Ongoing maintenance can be arranged separately.'],
+  ['Liability', 'We deliver our work with professional care, but we are not liable for indirect or consequential losses. Nothing in these terms limits liability that cannot be limited by law.']
+];
 ---
 <Base lang={lang} title={title} description={title}>
-  <PageHero lang={lang} tag={fr ? 'Légal' : 'Legal'} title={title} sub={fr ? 'Dernière mise à jour : [date]' : 'Last updated: [date]'} crumbs={[{ label: title, path: '/terms' }]} />
+  <PageHero lang={lang} tag={fr ? 'Légal' : 'Legal'} title={title} sub={fr ? 'Dernière mise à jour : octobre 2026' : 'Last updated: October 2026'} crumbs={[{ label: title, path: '/terms' }]} />
   <section class="section" style="padding-top:0">
-    <div class="container prose">
-      <p class="placeholder-note" style="justify-self:start">{fr ? 'Texte juridique à fournir par votre conseil' : 'Legal text to be provided by your advisor'}</p>
-      <p>{fr ? '[Collez ici le texte juridique complet.]' : '[Paste the full legal text here.]'}</p>
+    <div class="container">
+      <div class="prose legal">
+        {sections.map(([h, p]) => (<><h2>{h}</h2><p>{p}</p></>))}
+      </div>
     </div>
   </section>
 </Base>
+<style>
+  .legal { max-width: 860px; }
+  .legal h2 { font-size: 20px; margin-top: 16px; }
+</style>

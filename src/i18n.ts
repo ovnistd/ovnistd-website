@@ -41,46 +41,57 @@ export const ui = {
   nav: {
     services: { en: 'Services', fr: 'Services' },
     work: { en: 'Work', fr: 'Projets' },
-    about: { en: 'About', fr: 'À propos' },
+    about: { en: 'Our story', fr: 'Notre histoire' },
     contact: { en: 'Contact', fr: 'Contact' },
-    cta: { en: 'Start a project', fr: 'Lancer un projet' },
+    cta: { en: 'Free consultation', fr: 'Consultation gratuite' },
     menu: { en: 'Menu', fr: 'Menu' },
   },
   hero: {
     badgeTag: { en: 'New', fr: 'Nouveau' },
-    badge: { en: 'AI content studio just launched!', fr: 'Notre studio de contenu IA est lancé !' },
-    title1: { en: 'Brands that feel', fr: 'Des marques' },
-    title2: { en: 'out of this world', fr: 'venues d’ailleurs' },
+    badge: { en: 'AI + VFX product content is here!', fr: 'Les contenus produit IA + VFX sont là !' },
+    title1: { en: 'Sell your product', fr: 'Vendez votre produit' },
+    title2: { en: 'before it arrives', fr: 'avant qu’il arrive' },
     sub: {
-      en: 'Websites, brand identities, 3D and films for ambitious brands, designed and built by one studio.',
-      fr: 'Sites web, identités de marque, 3D et films pour les marques ambitieuses, conçus et réalisés par un seul studio.',
+      en: 'A Shopify store that converts, with your product in photoreal 3D and AI + VFX content. No samples, no photoshoot. Ready in 2 weeks.',
+      fr: 'Une boutique Shopify qui convertit, avec votre produit en 3D photoréaliste et des contenus IA + VFX. Sans échantillon, sans shooting. Prête en 2 semaines.',
     },
-    cta1: { en: 'Start a project', fr: 'Lancer un projet' },
-    cta2: { en: 'Watch showreel', fr: 'Voir le showreel' },
-    factPlace: { en: 'Based in', fr: 'Basé à' },
+    cta1: { en: 'Free consultation', fr: 'Consultation gratuite' },
+    cta2: { en: 'Meet the founder', fr: 'Rencontrer le fondateur' },
+    factDelivery: { en: 'Delivery', fr: 'Livraison' },
+    factDeliveryValue: { en: '2 weeks max', fr: '2 semaines max' },
     factSince: { en: 'Since', fr: 'Depuis' },
     factLangs: { en: 'We speak', fr: 'On parle' },
   },
   sections: {
     services: {
-      tag: { en: 'What we do', fr: 'Ce qu’on fait' },
-      title: { en: 'Six crafts, one studio', fr: 'Six métiers, un seul studio' },
+      tag: { en: 'The 3D Launch Pack', fr: 'Le Pack Lancement 3D' },
+      title: { en: 'One pack.\nEverything to launch.', fr: 'Un seul pack.\nTout pour lancer.' },
       sub: {
-        en: 'From the first sketch to the launch film, every piece of your brand is made under one roof, so it all fits together.',
-        fr: 'Du premier croquis au film de lancement, chaque élément de votre marque est fait sous le même toit, pour que tout s’accorde.',
+        en: 'A Shopify store built to convert, with your product in photoreal 3D. No samples, no photoshoot, no waiting for production. Two weeks, max.',
+        fr: 'Une boutique Shopify pensée pour convertir, avec votre produit en 3D photoréaliste. Sans échantillon, sans shooting, sans attendre la production. Deux semaines, maximum.',
       },
+    },
+    intro: {
+      tag: { en: 'Meet the founder', fr: 'Le fondateur' },
+      title: { en: 'A word from\nthe founder', fr: 'Quelques mots\ndu fondateur' },
+      sub: {
+        en: 'Why I started Ovnistudio and how 3D can launch your brand before your product arrives.',
+        fr: 'Pourquoi j’ai créé Ovnistudio et comment la 3D peut lancer votre marque avant l’arrivée de votre produit.',
+      },
+      soon: { en: 'Video coming soon', fr: 'Vidéo bientôt disponible' },
+      play: { en: 'Play video', fr: 'Lire la vidéo' },
     },
     stats: {
       tag: { en: 'Our track record', fr: 'Nos résultats' },
     },
     why: {
       tag: { en: 'Why us', fr: 'Pourquoi nous' },
-      title: { en: 'Not your typical agency', fr: 'Pas une agence comme les autres' },
+      title: { en: 'Launch without\nthe product in hand', fr: 'Lancez sans avoir\nle produit en main' },
       sub: {
-        en: 'Same budget, very different experience. Here is what changes when you work with a studio instead of a machine.',
-        fr: 'Même budget, expérience très différente. Voici ce qui change quand vous travaillez avec un studio plutôt qu’une machine.',
+        en: 'Many new brands source from China and never hold their product before selling it. Here is what changes when you launch with us.',
+        fr: 'Beaucoup de nouvelles marques s’approvisionnent en Chine et ne tiennent jamais leur produit avant de le vendre. Voici ce qui change quand vous lancez avec nous.',
       },
-      typical: { en: 'Typical agency', fr: 'Agence classique' },
+      typical: { en: 'The usual way', fr: 'La méthode classique' },
       studio: { en: 'Ovnistudio', fr: 'Ovnistudio' },
     },
     work: {
@@ -94,10 +105,10 @@ export const ui = {
     },
     process: {
       tag: { en: 'How we work', fr: 'Notre méthode' },
-      title: { en: 'Five steps, zero surprises', fr: 'Cinq étapes, zéro surprise' },
+      title: { en: 'Two weeks,\nfive steps', fr: 'Deux semaines,\ncinq étapes' },
       sub: {
-        en: 'A clear path from first call to launch day, with a fixed scope and a weekly check-in at every step.',
-        fr: 'Un chemin clair du premier appel au jour du lancement, avec un périmètre fixe et un point hebdo à chaque étape.',
+        en: 'From free consultation to launch day in 14 days max, and we keep following up after.',
+        fr: 'De la consultation gratuite au lancement en 14 jours maximum, et on continue le suivi après.',
       },
     },
     reviews: {
@@ -109,11 +120,11 @@ export const ui = {
       },
     },
     cta: {
-      title1: { en: 'Ready to land', fr: 'Prêt à faire atterrir' },
-      title2: { en: 'something new?', fr: 'quelque chose de neuf ?' },
+      title1: { en: 'Ready to make', fr: 'Prêt à rendre' },
+      title2: { en: 'your product real?', fr: 'votre produit réel ?' },
       sub: {
-        en: 'Tell us about your project. We reply within one business day with next steps and a ballpark.',
-        fr: 'Parlez-nous de votre projet. On répond sous un jour ouvré avec les prochaines étapes et une estimation.',
+        en: 'Book a free consultation. Tell us about your product and launch date, and we reply within 24 hours.',
+        fr: 'Réservez une consultation gratuite. Parlez-nous de votre produit et de votre date de lancement, on répond sous 24 heures.',
       },
     },
   },
@@ -140,8 +151,8 @@ export const ui = {
   },
   footer: {
     blurb: {
-      en: 'Independent creative studio for websites, brands, 3D and films.',
-      fr: 'Studio créatif indépendant pour sites web, marques, 3D et films.',
+      en: '3D-powered Shopify stores for brands launching new products.',
+      fr: 'Des boutiques Shopify boostées à la 3D pour les marques qui lancent de nouveaux produits.',
     },
     quick: { en: 'Quick links', fr: 'Liens rapides' },
     services: { en: 'Services', fr: 'Services' },

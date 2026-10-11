@@ -41,7 +41,6 @@ const year = new Date().getFullYear();
           <h4>{t(ui.footer.contact, lang)}</h4>
           <a href={`mailto:${studio.email}`}>{studio.email}</a>
           <a href={`tel:${studio.phone.replace(/\s/g, '')}`}>{studio.phone}</a>
-          <span>{studio.city}, {studio.country}</span>
         </div>
         <div>
           <h4>{t(ui.footer.socials, lang)}</h4>
@@ -72,11 +71,10 @@ const year = new Date().getFullYear();
   h4 { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
   .footer__bottom { display: flex; justify-content: space-between; gap: 16px; margin-top: 64px; padding: 20px 0; border-top: 1px solid var(--line); color: var(--text-3); }
   .footer__word {
-    font-size: clamp(56px, 15.5vw, 230px); font-weight: 600; letter-spacing: -0.06em; line-height: 0.78; text-align: center;
-    margin-top: 8px; margin-bottom: -0.12em; white-space: nowrap;
+    font-family: 'Unbounded', var(--font); font-size: clamp(34px, 10.4vw, 160px); font-weight: 800; letter-spacing: -0.02em; line-height: 0.9; text-align: center;
+    margin-top: 16px; margin-bottom: -0.14em; white-space: nowrap;
     background: linear-gradient(180deg, rgba(201, 184, 245, 0.55) 0%, rgba(75, 42, 138, 0.25) 55%, transparent 90%);
     -webkit-background-clip: text; background-clip: text; color: transparent;
-    -webkit-text-stroke: 1px rgba(201, 184, 245, 0.18);
   }
   @media (max-width: 1000px) {
     .footer__top { grid-template-columns: 1fr; }
